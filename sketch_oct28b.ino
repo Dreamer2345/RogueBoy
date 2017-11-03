@@ -65,3 +65,7 @@ void setup() {
 }
 
 
+
+void loop() {
+ MainMenu();
+}
