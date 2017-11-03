@@ -24,28 +24,6 @@ bool GETKEYS(){
  return Change;
 }
 
-void setup() {
-  ard.begin();
-  ard.clear();
-  
-}
-
-void MainMenu(){
-  bool Change = false;
-  byte Choice = 0;
-  while(!(Pressed[4])) {
-    Change = GETKEYS();
-    if (Change){
-      if (Pressed[2] && (Choice < 4)) {
-        Choice += 1;
-        }
-      if (Pressed[3] && (Choice > 0)) {
-        Choice -= 1;
-        }   
-    }
-  }
-  
-}
 
 void DisplayBitmap(byte x,byte y,int b,bool Col){
   uint8_t Buffer[16];
@@ -60,12 +38,30 @@ void DisplayBitmap(byte x,byte y,int b,bool Col){
   } else {
   ard.drawBitmap(x, y, Buffer, 16, 16, BLACK);
   }
+}
 
-  
+void MainMenu(){
+  bool Change = false;
+  byte Choice = 0;
+  while(!(Pressed[4])) {
+    Change = GETKEYS();
+    if (Change){
+      if (Pressed[2] && (Choice < 18)) {
+        Choice += 1;
+        }
+      if (Pressed[3] && (Choice > 0)) {
+        Choice -= 1;
+        } 
+      ard.print(Choice);  
+    }
+    DisplayBitmap(1,1,Choice,True);
+  }
 }
 
 
-
-void loop() {
-  
+void setup() {
+  ard.begin();
+  ard.clear();
 }
+
+
