@@ -1,7 +1,6 @@
 #include <Arduboy2.h>
 #include "Bitmaps.h"
 Arduboy2 ard;
-Sprites sprites;
 
 void MainMenu(){
   byte Choice = 0;
@@ -25,7 +24,7 @@ void MainMenu(){
     }
     
     }
-sprites.drawSelfMasked(20,20,BackgroundEnviroment,Choice);
+Sprites::drawSelfMasked(20,20,BackgroundEnviroment,Choice);
 ard.display();
 }
 
