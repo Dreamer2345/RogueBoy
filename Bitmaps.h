@@ -1,6 +1,10 @@
 #ifndef BITMAPS_BACKGROUND
 #define BITMAPS_BACKGROUND
 
+/*
+Some of the Sprites used for background are from https://github.com/JoeRagu/First-Game
+The rest I have drawn and put into this file.
+*/
 
 const unsigned char PROGMEM BackgroundEnviroment[] ={
 // width, height,
