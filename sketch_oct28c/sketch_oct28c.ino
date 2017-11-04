@@ -29,7 +29,7 @@ void loop()
 
   ard.pollButtons();
   ard.clear();
-
+  //Code with help from user Pharap.
   switch(gameState)
   {
     case GameState::MainMenu: UpdateMainMenu(); break;
