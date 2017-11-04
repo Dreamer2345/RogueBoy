@@ -48,6 +48,7 @@ void DisplayBitmap(byte x,byte y,int b,bool Col){
 void MainMenu(){
   byte Choice = 0;
   while(!(ard.justPressed(A_BUTTON))) {
+    while(!ard.nextFrame()){} 
     ard.pollButtons();
     if (ard.pressed(UP_BUTTON)||ard.pressed(DOWN_BUTTON)){
       if (ard.justPressed(UP_BUTTON) && (Choice < 18)) {
@@ -58,9 +59,11 @@ void MainMenu(){
         } 
       ard.clear();
       ard.print(Choice);  
+      ard.display();
     }
-    sprites.drawSelfMasked(20,20,BackgroundEnviroment,Choice);
     }
+sprites.drawSelfMasked(20,20,BackgroundEnviroment,Choice);
+ard.display();
 }
 
 
