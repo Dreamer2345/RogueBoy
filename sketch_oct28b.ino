@@ -48,6 +48,7 @@ void DisplayBitmap(byte x,byte y,int b,bool Col){
 void MainMenu(){
   byte Choice = 0;
   while(!(ard.justPressed(A_BUTTON))) {
+    ard.pollButtons();
     if (ard.pressed(UP_BUTTON)||ard.pressed(DOWN_BUTTON)){
       if (ard.justPressed(UP_BUTTON) && (Choice < 18)) {
         Choice += 1;
