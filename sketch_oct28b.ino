@@ -1,5 +1,4 @@
 #include <Arduboy2.h>
-#include <Sprites.h>
 #include "Bitmaps.h"
 Arduboy2 ard;
 Sprites sprites;
