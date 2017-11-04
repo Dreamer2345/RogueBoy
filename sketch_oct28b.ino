@@ -1,7 +1,10 @@
 #include <Arduboy2.h>
+#include <Sprites.h>
 #include "Bitmaps.h"
 Arduboy2 ard;
-int Pressed [6] = {false,false,false,false,false,false};
+Sprites sprites;
+
+/*int Pressed [6] = {false,false,false,false,false,false};
 
 
 bool GETKEYS(){
@@ -23,8 +26,9 @@ bool GETKEYS(){
   }
  return Change;
 }
+*/
 
-
+/*
 void DisplayBitmap(byte x,byte y,int b,bool Col){
   uint8_t Buffer[16];
   int Wid = 16;
@@ -39,23 +43,23 @@ void DisplayBitmap(byte x,byte y,int b,bool Col){
   ard.drawBitmap(x, y, Buffer, 16, 16, BLACK);
   }
 }
+*/
 
 void MainMenu(){
-  bool Change = false;
   byte Choice = 0;
-  while(!(Pressed[4])) {
-    Change = GETKEYS();
-    if (Change){
-      if (Pressed[2] && (Choice < 18)) {
+  while(!(ard.justPressed(A_BUTTON))) {
+    if (ard.pressed(UP_BUTTON)||ard.pressed(DOWN_BUTTON)){
+      if (ard.justPressed(UP_BUTTON) && (Choice < 18)) {
         Choice += 1;
         }
-      if (Pressed[3] && (Choice > 0)) {
+      if (ard.justPressed(DOWN_BUTTON) && (Choice > 0)) {
         Choice -= 1;
         } 
+      ard.clear();
       ard.print(Choice);  
     }
-    DisplayBitmap(1,1,Choice,True);
-  }
+    sprites.drawSelfMasked(20,20,BackgroundEnviroment,Choice);
+    }
 }
 
 
@@ -63,6 +67,10 @@ void setup() {
   ard.begin();
   ard.clear();
 }
+
+
+
+
 
 
 
