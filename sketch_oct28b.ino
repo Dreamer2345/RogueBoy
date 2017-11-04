@@ -10,7 +10,7 @@ void MainMenu(){
   while(!(ard.justPressed(A_BUTTON))) {
     while(!ard.nextFrame()){} 
     ard.pollButtons();
-    if (ard.justPressed(UP_BUTTON) && (Choice < 18)) {
+    if (ard.justPressed(UP_BUTTON) && (Choice < 17)) {
         Choice += 1;
         Update = true;
     } 
