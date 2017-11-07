@@ -14,7 +14,7 @@ void UpdateMainMenu(){
   if (ard.justPressed(A_BUTTON)){
     gameState = GameState::Game;
   }
-  if (ard.everyXFrames(30)) {
+  if (ard.everyXFrames(15)) {
       if (AniStep == 4) {
           AniStep = 0;
       } else {
