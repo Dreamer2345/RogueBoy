@@ -8,13 +8,15 @@ Sprites sprites;
 
 void UpdateMainMenu(){
   sprites.drawSelfMasked(1,1,Logo,0);
+  if (Anistep > 2){
+   sprites.drawSelfMasked(21,56,Arrow,0);
+  }
   if (ard.justPressed(A_BUTTON)){
     gameState = GameState::Game;
   }
   if (ard.everyXFrames(30)) {
-      if (AniStep == 2) {
+      if (AniStep == 4) {
           AniStep = 0;
-          sprites.drawSelfMasked(21,56,Arrow,0);
       } else {
           AniStep++;
       }
