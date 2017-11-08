@@ -29,7 +29,7 @@ void PlayerClass::PlayerMovement(){
   if (ard.pressed(LEFT_BUTTON)&& Walkable(x-1,y)){
     x--;
     }   
-  if (ard.pressed(A_BUTTON)&&ard.pressed(B_BUTTON)){
+  if (ard.pressed(B_BUTTON + A_BUTTON)){
     gameState = GameState::MainMenu;
   }
 }
