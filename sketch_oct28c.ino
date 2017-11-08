@@ -9,8 +9,8 @@ Sprites sprites;
 
 
 void UpdateMainMenu(){
-  sprites.drawSelfMasked(1,1,Logo,0);
-  if (showarrow){sprites.drawOverwrite(21,56,Arrow,0);}
+  sprites.drawSelfMasked(0,0,Logo,0);
+  if (showarrow){sprites.drawOverwrite(20,55,Arrow,0);}
   if (ard.justPressed(A_BUTTON)){
     gameState = GameState::Game;
   }
