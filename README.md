@@ -1,2 +1,3 @@
 # ROUGEBOY
-Graphics test.
+Graphics testing for [WIP]ROUGEBOY for the Arduboy.
+
