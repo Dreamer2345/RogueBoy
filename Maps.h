@@ -1,6 +1,6 @@
 #pragma once
-#define CENTERX 64
-#define CENTERY 32
+#define CENTERX 63
+#define CENTERY 31
 #define TILE_SIZE 16
 #define MAP_HEIGHT  10
 #define MAP_WIDTH  10
