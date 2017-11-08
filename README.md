@@ -6,3 +6,12 @@ Graphics testing for [WIP]ROUGEBOY for the Arduboy.
 -A+B = Main Menu
 
 * Keys subject to change
+
+
+TO DO:
+* Rewrite Player Class
+* Changeable Levels
+* Enemys
+* Enviroment elements (Keys,Doors,Switches Etc)
+* Attacking
+* Game over screen
