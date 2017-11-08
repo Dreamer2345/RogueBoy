@@ -4,8 +4,7 @@
 #include "Maps.h"
 
 byte showarrow;
-enum class GameState { MainMenu, Settings, Game };
-GameState gameState = GameState::MainMenu;
+
 
 
 
