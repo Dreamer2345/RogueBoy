@@ -17,16 +17,16 @@ class PlayerClass {
 PlayerClass playerobj;
 
 void PlayerClass::PlayerMovement(){
-  if (ard.justPressed(UP_BUTTON) && Walkable(x,y+1)){
+  if (ard.pressed(UP_BUTTON) && Walkable(x,y+1)){
     y++;
     }
-  if (ard.justPressed(DOWN_BUTTON) && Walkable(x,y-1)){
+  if (ard.pressed(DOWN_BUTTON) && Walkable(x,y-1)){
     y--;
     }
-  if (ard.justPressed(RIGHT_BUTTON)&& Walkable(x+1,y)){
+  if (ard.pressed(RIGHT_BUTTON)&& Walkable(x+1,y)){
     x++;
     }
-  if (ard.justPressed(LEFT_BUTTON)&& Walkable(x-1,y)){
+  if (ard.pressed(LEFT_BUTTON)&& Walkable(x-1,y)){
     x--;
     }   
   if (ard.pressed(A_BUTTON)&&ard.pressed(B_BUTTON)){
