@@ -98,7 +98,7 @@ uint8_t GetBlock(int x,int y){
 
 bool Walkable(int x,int y) {
   bool Walk = false;
-  switch (GetBlock(x,y)){
+  switch (GetBlock(x/16,y/16)){
     case OPEN_DOOR: Walk = true; break;
     case DOWN_STAIRS: Walk = true; break;
     case EMPTY: Walk = true; break;
