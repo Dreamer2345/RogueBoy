@@ -21,6 +21,7 @@ void UpdateMainMenu(){
 void setup() {
   ard.begin();
   ard.clear();
+  Init(1,1);
 }
 
 
