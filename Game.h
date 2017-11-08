@@ -1,5 +1,3 @@
-#include <Sprites.h>
-
 
 void DisplayEnviroment(){
   int x = playerobj.x/16;
