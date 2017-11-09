@@ -9,8 +9,6 @@ Graphics testing for [WIP]ROUGEBOY for the Arduboy.
 
 
 TO DO:
-* Rewrite Player Class
-* Changeable Levels
 * Enemys
 * Enviroment elements (Keys,Doors,Switches Etc)
 * Attacking
