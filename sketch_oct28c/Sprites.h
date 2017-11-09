@@ -33,8 +33,8 @@ void SpriteClass::SpriteAI(){
 
 
 void SpriteClass::Display(){
-  int _x = x-relx-4;
-  int _y = y-rely-4;
+  int _x = ((x-relx)/16)-4;
+  int _y = ((y-rely)/16)-4;
   sprites.drawOverwrite(CENTERX+_x,CENTERY+_y,SpriteEnviroment,Frame+offset);
 }
 
