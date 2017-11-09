@@ -27,7 +27,7 @@ class SpriteClass{
 
 void SpriteClass::SpriteAI(){
   switch(type){
-    case 1: if (Frame < 2) {Frame++;} else {Frame = 0;}break;
+    case 1: if (Frame < 5) {Frame++;} else {Frame = 0;}break;
   }
 }
 
