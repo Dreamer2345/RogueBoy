@@ -9,6 +9,7 @@ class PlayerClass {
   int y;
   byte d;
   byte H;
+  byte Keys;
   bool Moving;
   bool Frame;
   void PlayerMovement();   
@@ -40,9 +41,7 @@ void PlayerClass::PlayerMovement(){
     d = 3;
     }   
 
-  if (ard.justPressed(A_BUTTON)){
-    
-  }
+
 
 
 
@@ -53,7 +52,32 @@ void PlayerClass::PlayerMovement(){
   
   if (ard.pressed(A_BUTTON+B_BUTTON)){
     gameState = GameState::MainMenu;
+    Level = 0;
   }
+  
+  if (ard.justPressed(A_BUTTON)){
+    int relx = x/16;
+    int rely = y/16;
+    uint8_t bl = GetBlock(relx,rely);
+    if (bl == DOWN_STAIRS){
+      gameState = GameState::LoadMap;
+    } 
+    else 
+    {
+        switch(d){
+          case 0: rely++; break;
+          case 1: rely--; break;
+          case 2: relx++; break;
+          case 3: relx--; break;
+          }
+        bl = GetBlock(relx,rely);
+        switch(bl){
+          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); break;
+          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); break;
+          case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); break;
+        }
+    }
+  
 }
 
 

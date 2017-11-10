@@ -1,13 +1,13 @@
 #pragma once
 #define MAXOBJECT 25
-#define CENTERX 64
-#define CENTERY 32
+#define CENTERX 63
+#define CENTERY 31
 #define TILE_SIZE 16
 #define MAP_HEIGHT  10
 #define MAP_WIDTH  10
 
 #define CLOSED_CHEST  0
-#define OPEN_CHEST  5
+#define OPEN_CHEST  5 //Walkable
 
 #define BARREL  4
 #define EXPLOSIVE_BARREL  16
@@ -81,7 +81,7 @@ const uint8_t PROGMEM MAP_1[] ={
   //Objects
   //<ID><xpos><ypos><Health>
   1,2,2,0,
-  1,2,2,0,
+  1,2,2,0
   };
 
  
@@ -100,6 +100,10 @@ uint8_t GetBlock(int x,int y){
     return Block;
 }
 
+void SetBlock(int x,int y,uint8_t bl){
+    if ((x < 0) || (y < 0) || (x > MAP_WIDTH) || (y > MAP_HEIGHT)){return;}
+    Map[(x+(y*MAP_WIDTH))] = bl;
+}
 
 
 
@@ -109,6 +113,7 @@ bool Walkable(int x,int y) {
     case OPEN_DOOR: Walk = true; break;
     case DOWN_STAIRS: Walk = true; break;
     case EMPTY: Walk = true; break;
+    case OPEN_Chest: Walk = true; break;
     }
   return Walk;
 }
