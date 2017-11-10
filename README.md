@@ -5,6 +5,8 @@ Graphics testing for [WIP]ROUGEBOY for the Arduboy.
 
 -A+B = Main Menu
 
+-A = Interact
+
 * Keys subject to change
 
 
