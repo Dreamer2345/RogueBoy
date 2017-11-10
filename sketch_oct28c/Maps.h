@@ -5,6 +5,8 @@
 #define TILE_SIZE 16
 #define MAP_HEIGHT  10
 #define MAP_WIDTH  10
+#define MAP_SIZE MAP_HEIGHT*MAP_WIDTH
+
 
 #define CLOSED_CHEST  0
 #define OPEN_CHEST  5 //Walkable
@@ -65,22 +67,21 @@ const uint8_t PROGMEM MAP_1[] = {
   //PLAYER STARTING POSITION
   0, 0,
   //MAP DATA
-  9, 8, 8, 8, 8, 1, 8, 0, 0, 0,
-  1, 1, 1, 1, 8, 1, 8, 0, 0, 0,
-  8, 8, 8, 8, 8, 8, 8, 0, 0, 0,
-  8, 1, 8, 1, 8, 0, 8, 1, 0, 0,
-  8, 1, 8, 1, 8, 8, 8, 1, 0, 0,
-  8, 1, 8, 1, 8, 8, 8, 1, 0, 0,
-  8, 1, 8, 1, 8, 1, 2, 1, 0, 0,
-  8, 1, 8, 1, 8, 1, 8, 0, 0, 0,
-  8, 1, 8, 1, 8, 1, 3, 0, 0, 0,
-  1, 1, 8, 1, 8, 1, 1, 0, 0, 0,
-  8, 8, 8, 8, 8, 1, 1, 0, 0, 0,
+  9, 8, 8, 8, 8, 1, 8, 1, 1, 0,
+  1, 1, 1, 1, 8, 1, 8, 1, 1, 0,
+  8, 8, 8, 8, 8, 8, 8, 1, 1, 0,
+  8, 1, 8, 1, 8, 0, 8, 1, 1, 0,
+  8, 1, 8, 1, 8, 8, 8, 1, 1, 0,
+  8, 1, 8, 1, 8, 8, 8, 1, 1, 0,
+  8, 1, 8, 1, 8, 1, 2, 1, 1, 0,
+  8, 1, 8, 1, 8, 1, 8, 1, 1, 0,
+  8, 1, 8, 1, 8, 1, 3, 1, 1, 0,
+  8, 1, 8, 1, 8, 1, 1, 1, 1, 0,
+  8, 8, 8, 8, 8, 1, 1, 1, 0, 0,
   //Number of Objects
-  2,
+  1,
   //Objects
   //<ID><xpos><ypos><Health>
-  1, 2, 2, 0,
   1, 2, 2, 0
 };
 
@@ -102,17 +103,16 @@ const uint8_t PROGMEM MAP_2[] = {
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 3,
   //Number of Objects
-  2,
+  1,
   //Objects
   //<ID><xpos><ypos><Health>
   1, 2, 2, 0,
-  1, 2, 2, 0
 };
 
 byte Level;
 
 const uint8_t * Maps[] = {MAP_1,MAP_2};
-uint8_t Map[MAP_WIDTH * MAP_HEIGHT];
+uint8_t Map[MAP_SIZE];
 
 
 

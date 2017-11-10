@@ -27,14 +27,14 @@ class SpriteClass{
 
 void SpriteClass::SpriteAI(){
   switch(type){
-    case 1: if (Frame < 5) {Frame++;} else {Frame = 0;}break;
+    case 1: if ((Frame < 5)&&(ard.everyXFrames(12))) {Frame++;} else {Frame = 0;}break;
   }
 }
 
 
 void SpriteClass::Display(){
-  int _x = x-relx-4;
-  int _y = y-rely-4;
-  sprites.drawOverwrite(CENTERX+_x,CENTERY+_y,SpriteEnviroment,Frame+offset);
+  int _x = (relx-x)-4;
+  int _y = (rely-y)-4;
+  sprites.drawOverwrite(CENTERX+_x,CENTERY+_y,SpriteEnviroment,(Frame+offset));
 }
 

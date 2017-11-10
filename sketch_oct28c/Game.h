@@ -17,11 +17,13 @@ void Init(int x,int y){
 void DisplayEnviroment(){
   int x = playerobj.x/16;
   int y = playerobj.y/16;
-  for (int i=-5; i<10;i++){
+  int ofx = abs(playerobj.x % 17);
+  int ofy = abs(playerobj.y % 17);
+  for (int i=-5; i<5;i++){
     for(int j=-3; j<3;j++){
       uint8_t bl = GetBlock((i+x),(j+y));
-      int drx = (CENTERX + (i*16))-8;
-      int dry = (CENTERY + (j*16))-8;
+      int drx = (CENTERX + ((i*16)+ofx))-8;
+      int dry = (CENTERY + ((j*16)+ofy))-8;
       sprites.drawSelfMasked(drx,dry,BackgroundEnviroment,bl);
     }
   }
@@ -55,11 +57,9 @@ void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
     int px = pgm_read_byte(&CLevel[2]);
     int py = pgm_read_byte(&CLevel[3]);
-    uint8_t index = OFFSET+(MAP_WIDTH*MAP_HEIGHT)+1;
+    uint8_t index = OFFSET+MAP_SIZE+1;
     Init(px,py);
-    for (int i=0; i<(MAP_WIDTH*MAP_HEIGHT); i++){
-        Map[i] = pgm_read_byte(&CLevel[(OFFSET+i)]);
-    }
+    memcpy_P(&Map[0], &CLevel[OFFSET], MAP_SIZE);
     ONum = pgm_read_byte(&CLevel[index]);
     byte ID = 0;
     byte H = 0;
@@ -110,14 +110,17 @@ void MapEnding(){
     int padd = playerobj.Coins * 5;    
     int kadd = playerobj.Keys * 10;
     ard.setCursor(0,0);
-    ard.print("Level:");
+    ard.print(F("Level:"));
     ard.println(Level);
-    ard.print("Coins:");
+    ard.print(F("Coins:"));
     ard.println(playerobj.Coins);
-    ard.print("Keys:");
+    ard.print(F("Keys:"));
     ard.println(playerobj.Keys);
-    ard.print("Total Points:");
+    ard.print(F("Level Points:"));
     ard.println(kadd+padd);
+    
+    ard.print(F("Total Points:"));
+    ard.println(POINTS+kadd+padd);
     
     if (ard.everyXFrames(120)) {
         gameState = GameState::LoadMap;
