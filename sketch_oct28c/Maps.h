@@ -120,7 +120,7 @@ uint8_t GetBlock(int x, int y) {
   if ((x < 0) || (y < 0) || (x > MAP_WIDTH) || (y > MAP_HEIGHT)) {
     return BLANK_WALL;
   }
-  uint8_t Block = Map[(x + (y * (MAP_WIDTH+1)))];
+  uint8_t Block = Map[(x + (y * (MAP_WIDTH)))];
   return Block;
 }
 
@@ -128,7 +128,7 @@ void SetBlock(int x, int y, uint8_t bl) {
   if ((x < 0) || (y < 0) || (x > MAP_WIDTH) || (y > MAP_HEIGHT)) {
     return;
   }
-  Map[(x + (y * (MAP_WIDTH+1)))] = bl;
+  Map[(x + (y * (MAP_WIDTH)))] = bl;
 }
 
 
