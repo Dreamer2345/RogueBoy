@@ -1,9 +1,12 @@
 #include <Arduboy2.h>
 Arduboy2 ard;
 Sprites sprites;
-
+int POINTS = 0;
 #include "Global.h"
 #include "Game.h"
+
+
+
 
 
 void setup() {
@@ -28,6 +31,7 @@ void loop() {
     //case GameState::Settings: UpdateSettings(); break;
     case GameState::Game: UpdateGame(); break;
     case GameState::LoadMap: NextLevelLoad(); break;
+    case GameState::MapEnding: MapEnding(); break;
   }
 
   ard.display();

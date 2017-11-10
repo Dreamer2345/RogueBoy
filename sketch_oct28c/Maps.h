@@ -113,7 +113,7 @@ bool Walkable(int x,int y) {
     case OPEN_DOOR: Walk = true; break;
     case DOWN_STAIRS: Walk = true; break;
     case EMPTY: Walk = true; break;
-    case OPEN_Chest: Walk = true; break;
+    case OPEN_CHEST: Walk = true; break;
     }
   return Walk;
 }

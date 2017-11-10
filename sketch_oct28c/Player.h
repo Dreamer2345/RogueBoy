@@ -1,6 +1,6 @@
 #include <Arduboy2.h>
 
-enum class GameState { MainMenu, Settings, Game ,LoadMap};
+enum class GameState { MainMenu, Settings, Game ,LoadMap ,GameOver, MapEnding};
 GameState gameState = GameState::MainMenu;
 
 class PlayerClass {
@@ -10,6 +10,7 @@ class PlayerClass {
   byte d;
   byte H;
   byte Keys;
+  byte Coins;
   bool Moving;
   bool Frame;
   void PlayerMovement();   
@@ -60,7 +61,7 @@ void PlayerClass::PlayerMovement(){
     int rely = y/16;
     uint8_t bl = GetBlock(relx,rely);
     if (bl == DOWN_STAIRS){
-      gameState = GameState::LoadMap;
+      gameState = GameState::MapEnding;
     } 
     else 
     {
@@ -78,6 +79,7 @@ void PlayerClass::PlayerMovement(){
         }
     }
   
+  }
 }
 
 

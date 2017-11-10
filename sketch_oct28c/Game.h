@@ -108,6 +108,30 @@ void DisplayObjects() {
 }
 
 
+void MapEnding(){
+    int padd = playerobj.Coins * 5;    
+    int kadd = playerobj.Keys * 10;
+    ard.setCursor(0,0);
+    ard.print("Level:");
+    ard.print("Coins:");
+    ard.print("Keys:");
+    ard.print("Total Points:");
+    byte sinx = 0;
+    ard.setCursor(25,sinx);
+    ard.print(Level); sinx++;
+    ard.setCursor(25,sinx);
+    ard.print(padd); sinx++;
+    ard.setCursor(25,sinx);
+    ard.print(kadd); sinx++;
+    ard.setCursor(25,sinx);
+    ard.print(kadd+padd); sinx++;
+    
+    if (ard.everyXFrames(120)) {
+        gameState = GameState::LoadMap;
+        POINTS += padd + kadd;
+    }
+}
+
 
 void UpdateGame(){
   playerobj.PlayerMovement();

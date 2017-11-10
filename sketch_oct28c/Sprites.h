@@ -5,8 +5,8 @@ class SpriteClass{
   public:
     SpriteClass() { };
 
-    void setSprite(int _x,int _y,byte _H,byte _type,byte _offset,bool _Active){x = _x;y = _y;H = _H;type = _type;Frame = 0;offset=_offset;Active = _Active;}
-    void UPPos(int _x,int _y){relx = _x; rely = _y;}
+    void setSprite(int _x,int _y,byte _H,byte _type,byte _offset,bool _Active){x = _x;y = _y;H = _H;type = _type;Frame = 0;offset=_offset;Active = _Active;};
+    void UPPos(int _x,int _y){relx = _x; rely = _y;};
     void SpriteAI();
     void Display();
     byte GetFrame(){return Frame;}
