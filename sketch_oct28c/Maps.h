@@ -120,7 +120,7 @@ uint8_t GetBlock(int x, int y) {
   if ((x < 0) || (y < 0) || (x > MAP_WIDTH) || (y > MAP_HEIGHT)) {
     return BLANK_WALL;
   }
-  uint8_t Block = Map[(x + (y * MAP_WIDTH))];
+  uint8_t Block = Map[(x + (y * (MAP_WIDTH+1)))];
   return Block;
 }
 
@@ -128,14 +128,14 @@ void SetBlock(int x, int y, uint8_t bl) {
   if ((x < 0) || (y < 0) || (x > MAP_WIDTH) || (y > MAP_HEIGHT)) {
     return;
   }
-  Map[(x + (y * MAP_WIDTH))] = bl;
+  Map[(x + (y * (MAP_WIDTH+1)))] = bl;
 }
 
 
 
 bool Walkable(int x, int y) {
   bool Walk = false;
-  switch (GetBlock(x / 16, y / 16)) {
+  switch (GetBlock((x / 16),(y / 16))) {
     case OPEN_DOOR: Walk = true; break;
     case DOWN_STAIRS: Walk = true; break;
     case EMPTY: Walk = true; break;

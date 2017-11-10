@@ -19,8 +19,8 @@ void DisplayEnviroment(){
   int y = playerobj.y/16;
   int offx = playerobj.x % 16;
   int offy = playerobj.y % 16;
-  for (int i=-5; i<10 ,i++;){
-    for(int j=-3; j<3 ,j++;){
+  for (int i=-5; i<10;i++){
+    for(int j=-3; j<3;j++){
       uint8_t bl = GetBlock((i+x),(j+y));
       int drx = (CENTERX + (i*16) + offx)-8;
       int dry = (CENTERY + (j*16) + offy)-8;
@@ -59,7 +59,7 @@ void LoadMAP(byte L){
     int py = pgm_read_byte(&CLevel[3]);
     uint8_t index = OFFSET+(MAP_WIDTH*MAP_HEIGHT)+1;
     Init(px,py);
-    for (int i=0; i<(MAP_WIDTH*MAP_HEIGHT), i++;){
+    for (int i=0; i<(MAP_WIDTH*MAP_HEIGHT); i++){
         Map[i] = pgm_read_byte(&CLevel[(OFFSET+i)]);
     }
     ONum = pgm_read_byte(&CLevel[index]);
@@ -67,12 +67,12 @@ void LoadMAP(byte L){
     byte H = 0;
     byte Offs = 0;
     index++;
-    for (int i=0; i<MAXOBJECT, i++;){
+    for (int i=0; i<MAXOBJECT; i++){
       Objects[i].setSprite(0,0,0,0,0,false);
     }
 
     
-    for (int i=0; i<ONum, i++;){
+    for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
         px = pgm_read_byte(&CLevel[index++]);
         py = pgm_read_byte(&CLevel[index++]);
@@ -85,13 +85,13 @@ void LoadMAP(byte L){
 }
 
 void NextLevelLoad(){
-  Level++; 
   LoadMAP(Level);
+  Level++; 
   gameState = GameState::Game;
 }
 
 void UpdateObjects(){
-  for (byte i=0;i<ONum,i++;){
+  for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
       Objects[i].UPPos(playerobj.x,playerobj.y);
       Objects[i].SpriteAI();
@@ -100,7 +100,7 @@ void UpdateObjects(){
 }
 
 void DisplayObjects() {
-  for (byte i=0;i<ONum,i++;){
+  for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
     Objects[i].Display();
     }
@@ -113,18 +113,13 @@ void MapEnding(){
     int kadd = playerobj.Keys * 10;
     ard.setCursor(0,0);
     ard.print("Level:");
+    ard.println(Level);
     ard.print("Coins:");
+    ard.println(playerobj.Coins);
     ard.print("Keys:");
+    ard.println(playerobj.Keys);
     ard.print("Total Points:");
-    byte sinx = 0;
-    ard.setCursor(25,sinx);
-    ard.print(Level); sinx++;
-    ard.setCursor(25,sinx);
-    ard.print(padd); sinx++;
-    ard.setCursor(25,sinx);
-    ard.print(kadd); sinx++;
-    ard.setCursor(25,sinx);
-    ard.print(kadd+padd); sinx++;
+    ard.println(kadd+padd);
     
     if (ard.everyXFrames(120)) {
         gameState = GameState::LoadMap;
