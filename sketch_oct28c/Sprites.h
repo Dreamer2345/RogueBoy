@@ -10,7 +10,9 @@ class SpriteClass{
     void SpriteAI();
     void Display();
     byte GetFrame(){return Frame;}
+    byte GetType(){return type;}
     bool IsActive(){return Active;}
+    void SetActive(bool _k){Active = _k;}
     byte GetX(){return x;}
     byte GetY(){return y;}
   private:

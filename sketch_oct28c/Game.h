@@ -14,6 +14,10 @@ void Init(int x,int y){
   playerobj.H = 100;
 }
 
+bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return (Max0 >= Min1) && (Min0 <= Max1);}
+
+bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
+
 void DisplayEnviroment()
 {
   int tileX = GetTileX(playerobj.x);
@@ -75,8 +79,8 @@ void UpdateMainMenu(){
 
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
-    int px = (pgm_read_byte(&CLevel[2])*16)+8;
-    int py = (pgm_read_byte(&CLevel[3])*16)+8;
+    int px = pgm_read_byte(&CLevel[2]);
+    int py = pgm_read_byte(&CLevel[3]);
     uint8_t index = OFFSET+MAP_SIZE+1;
     Init(px,py);
     memcpy_P(&Map[0], &CLevel[OFFSET], MAP_SIZE);
@@ -92,8 +96,8 @@ void LoadMAP(byte L){
     
     for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
-        px = (pgm_read_byte(&CLevel[index++])*16)+8;
-        py = (pgm_read_byte(&CLevel[index++])*16)+8;
+        px = pgm_read_byte(&CLevel[index++]);
+        py = pgm_read_byte(&CLevel[index++]);
         H = pgm_read_byte(&CLevel[index++]);
         switch (ID){
           case 1: Offs=12; break;
@@ -118,8 +122,15 @@ void NextLevelLoad(){
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
-      Objects[i].UPPos(playerobj.x,playerobj.y);
-      Objects[i].SpriteAI();
+      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
+          switch(Objects[i].GetType()){
+            case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
+            case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
+            }
+      } else {
+        Objects[i].UPPos(playerobj.x,playerobj.y);
+        Objects[i].SpriteAI();
+        }
       }
   }
 }
