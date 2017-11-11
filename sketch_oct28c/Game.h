@@ -97,6 +97,13 @@ void LoadMAP(byte L){
         H = pgm_read_byte(&CLevel[index++]);
         switch (ID){
           case 1: Offs=12; break;
+          case 2: Offs=8; break;
+          case 3: Offs=9; break;
+          case 4: Offs=10; break;
+          case 5: Offs=11; break;
+          case 6: Offs=4; break; //Monsters VVVV
+          case 7: Offs=5; break;
+          case 8: Offs=6; break;
         }
         Objects[i].setSprite(px,py,H,ID,Offs,true);
     }

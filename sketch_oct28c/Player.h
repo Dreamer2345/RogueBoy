@@ -9,8 +9,8 @@ GameState gameState = GameState::MainMenu;
 
 class PlayerClass {
   public:
-  int x;
-  int y;
+  byte x;
+  byte y;
   byte d;
   byte H;
   byte Keys;
