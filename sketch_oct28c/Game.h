@@ -3,6 +3,7 @@
 
 PlayerClass playerobj;
 SpriteClass Objects[MAXOBJECT];
+
 byte ONum = 0;
 
 
@@ -17,6 +18,9 @@ void Init(int x,int y){
 bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return (Max0 >= Min1) && (Min0 <= Max1);}
 
 bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
+
+
+
 
 void DisplayEnviroment()
 {
@@ -88,11 +92,14 @@ void LoadMAP(byte L){
     byte ID = 0;
     byte H = 0;
     byte Offs = 0;
+    bool A = false;
     index++;
     for (int i=0; i<MAXOBJECT; i++){
       Objects[i].setSprite(0,0,0,0,0,false);
     }
-
+    for (int i=0; i<MAXENVIROMENT; i++){
+      Envi[i].SetEnv(0,0,0,0,false);
+    }
     
     for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
@@ -100,16 +107,24 @@ void LoadMAP(byte L){
         py = pgm_read_byte(&CLevel[index++]);
         H = pgm_read_byte(&CLevel[index++]);
         switch (ID){
-          case 1: Offs=12; break;
-          case 2: Offs=8; break;
-          case 3: Offs=9; break;
-          case 4: Offs=10; break;
-          case 5: Offs=11; break;
+          case 1: Offs=12; break; //Coin
+          case 2: Offs=8; break; //Potion
+          case 3: Offs=9; break; //Jelly Filled Doughnut
+          case 4: Offs=10; break; //Key
+          case 5: Offs=11; break; //Ham
           case 6: Offs=4; break; //Monsters VVVV
           case 7: Offs=5; break;
           case 8: Offs=6; break;
         }
         Objects[i].setSprite(px,py,H,ID,Offs,true);
+    }
+    ENum = pgm_read_byte(&CLevel[index++]);
+    for (int i=0; i<ONum; i++){
+        ID = pgm_read_byte(&CLevel[index++]);
+        Offs = pgm_read_byte(&CLevel[index++]);
+        py = pgm_read_byte(&CLevel[index++]);
+        H = pgm_read_byte(&CLevel[index++]);
+        Envi[i].SetEnv(ID,Offs,py,H,true);
     }
 }
 
@@ -122,9 +137,11 @@ void NextLevelLoad(){
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
-      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x+4,playerobj.y+4)){
+      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
+            case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} break;
+            case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} break;
             case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
             }
       } else {

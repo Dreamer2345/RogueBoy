@@ -1,5 +1,6 @@
 #pragma once
 #define MAXOBJECT 25
+#define MAXENVIROMENT 15
 #define CENTERX 63
 #define CENTERY 31
 
@@ -65,28 +66,36 @@
 */
 
 
+
+
+
 const uint8_t PROGMEM MAP_1[] = {
   //Map Dimentions
   MAP_HEIGHT, MAP_WIDTH,
   //PLAYER STARTING POSITION
   0, 0,
   //MAP DATA
-  9, 8, 8, 8, 8, 1, 8, 1, 1, 0,
+  9, 8, 8, 8, 8, 1, 11, 1, 1, 0,
   1, 1, 1, 1, 8, 1, 8, 1, 1, 0,
-  8, 8, 8, 8, 8, 8, 8, 1, 1, 0,
-  8, 1, 8, 1, 8, 0, 8, 1, 1, 0,
-  8, 1, 8, 1, 8, 8, 8, 1, 1, 0,
-  8, 1, 8, 1, 8, 8, 8, 1, 1, 0,
-  8, 1, 8, 1, 8, 1, 2, 1, 1, 0,
-  8, 1, 8, 1, 8, 1, 8, 1, 1, 0,
-  8, 1, 8, 1, 8, 1, 3, 1, 1, 0,
-  8, 1, 8, 1, 8, 1, 1, 1, 1, 0,
-  8, 8, 8, 8, 8, 1, 1, 1, 0, 0,
+  8, 8, 8, 1, 8, 8, 8, 1, 1, 0,
+  8, 8, 8, 1, 8, 0, 8, 1, 1, 0,
+  8, 8, 8, 1, 8, 8, 8, 1, 1, 0,
+  8, 8, 8, 1, 8, 8, 8, 1, 1, 0,
+  8, 8, 8, 1, 8, 1, 2, 1, 1, 0,
+  8, 8, 8, 1, 8, 1, 8, 1, 1, 0,
+  8, 8, 8, 1, 8, 1, 3, 1, 1, 0,
+  8, 8, 8, 1, 8, 1, 1, 1, 1, 0,
+  8, 8, 8, 15, 8, 1, 1, 1, 0, 0,
   //Number of Objects
   1,
   //Objects
   //<ID><xpos><ypos><Health>
-  1, 2, 2, 0
+  1, 2, 2, 0,
+  //Number of Oparators
+  1,
+  //Oparator (Switch locations/active points)
+  //<xpos of switch><ypos of switch><x active><y active><State>
+  6,0,3,9,0
 };
 
 const uint8_t PROGMEM MAP_2[] = {
@@ -111,6 +120,10 @@ const uint8_t PROGMEM MAP_2[] = {
   //Objects
   //<ID><xpos><ypos><Health>
   1, 2, 2, 0,
+  //Number of Oparators
+  0,
+  //Oparator (Switch locations/active points)
+  //<xpos of switch><ypos of switch><x active><y active><State>
 };
 
 byte Level;
@@ -180,7 +193,38 @@ bool Walkable(int x, int y) {
 }
 
 
+class EnviromentClass{
+  public:
+    EnviromentClass(){}
+    void SetEnv(byte _x, byte _y, byte _x1, byte _y1, bool _Active){x = _x; y = _y; x1 = _x1; y1 = _y1; Active = _Active;}
+    bool CheckStart(byte _x,byte _y){return ((_x==x)&&(_y==y));}
+    byte FinishX(){return x1;}
+    byte FinishY(){return y1;}
+    bool IsActive(){return Active;}
+  private:
+    byte x;
+    byte y;
+    byte x1;
+    byte y1;
+    bool Active;
+  
+};
 
+EnviromentClass Envi[MAXENVIROMENT];
+byte ENum = 0;
+
+void UpdateEBlock(byte x,byte y){
+  for (int i = 0; i < ENum; i++){
+    if (Envi[i].CheckStart(x,y)&&Envi[i].IsActive()) {
+      byte x1 = Envi[i].FinishX();
+      byte y1 = Envi[i].FinishY();
+      switch(GetBlock(x1,y1)){
+        case SPEAR_DOOR: SetBlock(x1,y1,OPEN_DOOR); break;
+        case OPEN_DOOR: SetBlock(x1,y1,SPEAR_DOOR); break;
+      }
+    }
+  }
+}
 
 
 

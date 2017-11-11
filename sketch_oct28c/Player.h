@@ -76,9 +76,10 @@ void PlayerClass::PlayerMovement() {
           }
         bl = GetBlock(relx,rely);
         switch(bl){
-          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); break;
-          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); break;
+          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); UpdateEBlock(relx,rely); break;
+          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); UpdateEBlock(relx,rely); break;
           case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); break;
+          case LOCKED_DOOR: if (Keys > 0) {SetBlock(relx,rely,OPEN_DOOR); Keys--;} break;
         }
     }
   
