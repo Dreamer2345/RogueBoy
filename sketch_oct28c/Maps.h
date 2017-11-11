@@ -70,7 +70,7 @@
 
 
 const uint8_t PROGMEM MAP_1[] = {
-  //Map Dimentions
+  //Map Dimentions (unused)
   MAP_HEIGHT, MAP_WIDTH,
   //PLAYER STARTING POSITION
   0, 0,
@@ -105,7 +105,7 @@ const uint8_t PROGMEM MAP_1[] = {
 };
 
 const uint8_t PROGMEM MAP_2[] = {
-  //Map Dimentions
+  //Map Dimentions (unused)
   MAP_HEIGHT, MAP_WIDTH,
   //PLAYER STARTING POSITION
   0, 0,
