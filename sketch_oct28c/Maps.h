@@ -2,7 +2,11 @@
 #define MAXOBJECT 25
 #define CENTERX 63
 #define CENTERY 31
+
+#define TILE_WIDTH 16
+#define TILE_HEIGHT 16
 #define TILE_SIZE 16
+
 #define MAP_HEIGHT  10
 #define MAP_WIDTH  10
 #define MAP_SIZE MAP_HEIGHT*MAP_WIDTH
@@ -111,16 +115,46 @@ const uint8_t PROGMEM MAP_2[] = {
 
 byte Level;
 
-const uint8_t * Maps[] = {MAP_1,MAP_2};
+const uint8_t * Maps[] = { MAP_1, MAP_2 };
 uint8_t Map[MAP_SIZE];
 
+int GetTileX(int x)
+{
+	if(x < 0)
+  		return (x / TILE_WIDTH) - 1;
+  	else
+  		return (x / TILE_WIDTH);
+}
 
+int GetTileY(int y)
+{
+	if(y < 0)
+  		return (y / TILE_HEIGHT) - 1;
+  	else
+  		return (y / TILE_HEIGHT);
+}
+
+int GetTileXOffset(int x)
+{
+	if(x < 0)
+  		return (TILE_WIDTH + (x % TILE_WIDTH));
+  	else
+  		return (x % TILE_WIDTH);
+}
+
+int GetTileYOffset(int y)
+{
+	if(y < 0)
+  		return (TILE_HEIGHT + (y % TILE_HEIGHT));
+  	else
+  		return (y % TILE_HEIGHT);
+}
 
 uint8_t GetBlock(int x, int y) {
   if ((x < 0) || (y < 0) || (x > MAP_WIDTH) || (y > MAP_HEIGHT)) {
     return BLANK_WALL;
   }
-  uint8_t Block = Map[(x + (y * (MAP_WIDTH)))];
+  uint8_t Block = Map[(x + (y * MAP_WIDTH))];
   return Block;
 }
 
@@ -134,14 +168,15 @@ void SetBlock(int x, int y, uint8_t bl) {
 
 
 bool Walkable(int x, int y) {
-  bool Walk = false;
-  switch (GetBlock((x / 16),(y / 16))) {
-    case OPEN_DOOR: Walk = true; break;
-    case DOWN_STAIRS: Walk = true; break;
-    case EMPTY: Walk = true; break;
-    case OPEN_CHEST: Walk = true; break;
+  switch (GetBlock(GetTileX(x), GetTileY(y))) {
+    case OPEN_DOOR:
+    case DOWN_STAIRS:
+    case EMPTY:
+    case OPEN_CHEST:
+    	return true;
+    default:
+    	return false;
   }
-  return Walk;
 }
 
 

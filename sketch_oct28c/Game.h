@@ -14,22 +14,42 @@ void Init(int x,int y){
   playerobj.H = 100;
 }
 
-void DisplayEnviroment(){
-  int x = playerobj.x/16;
-  int y = playerobj.y/16;
-  int ofx = abs(playerobj.x % 17);
-  int ofy = abs(playerobj.y % 17);
-  for (int i=-5; i<5;i++){
-    for(int j=-3; j<3;j++){
-      uint8_t bl = GetBlock((i+x),(j+y));
-      int drx = (CENTERX + ((i*16)+ofx))-8;
-      int dry = (CENTERY + ((j*16)+ofy))-8;
-      sprites.drawSelfMasked(drx,dry,BackgroundEnviroment,bl);
+void DisplayEnviroment()
+{
+  int tileX = GetTileX(playerobj.x);
+  int tileY = GetTileY(playerobj.y);
+  int offsetX = GetTileXOffset(playerobj.x);
+  int offsetY = GetTileYOffset(playerobj.y);
+    
+  for (int i = -5; i < 5; i++)
+  {
+    for(int j = -3; j < 3; j++)
+    {
+      uint8_t block = GetBlock(tileX + i, tileY + j);
+      int drawX = (i * 16) + CENTERX - offsetX;
+      int drawY = (j * 16) + CENTERY - offsetY;
+      sprites.drawSelfMasked(drawX, drawY, BackgroundEnviroment, block);
     }
   }
 }
 
-void DisplayPlayer(){
+void DisplayPlayer(){	
+  // Debugging Stuff
+  /*int tileX = GetTileX(playerobj.x);
+  int tileY = GetTileY(playerobj.y);
+  int offsetX = GetTileXOffset(playerobj.x);
+  int offsetY = GetTileYOffset(playerobj.y);
+  
+  ard.setCursor(0,0);
+  ard.print(F("TX: "));
+  ard.println(tileX);
+  ard.print(F("TY: "));
+  ard.println(tileY);
+  ard.print(F("OX: "));
+  ard.println(offsetX);
+  ard.print(F("OY: "));
+  ard.println(offsetY);*/
+	
   if ((playerobj.Moving) && (ard.everyXFrames(15))){
         playerobj.Frame = !playerobj.Frame;
         if (playerobj.Frame){

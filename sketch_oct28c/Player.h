@@ -1,4 +1,8 @@
+#pragma once
+
 #include <Arduboy2.h>
+
+#include "Maps.h"
 
 enum class GameState { MainMenu, Settings, Game ,LoadMap ,GameOver, MapEnding};
 GameState gameState = GameState::MainMenu;
@@ -13,25 +17,24 @@ class PlayerClass {
   byte Coins;
   bool Moving;
   bool Frame;
-  void PlayerMovement();   
-  
+  void PlayerMovement();
 };
 
 
 
-void PlayerClass::PlayerMovement(){
+void PlayerClass::PlayerMovement() {
   Moving = false;
-  if (ard.pressed(UP_BUTTON) && Walkable(x,y+1)){
-    y++;
+  if (ard.pressed(UP_BUTTON) && Walkable(x,y-1)){
+    y--;
     Moving = true;
     d = 0;
     }
-  if (ard.pressed(DOWN_BUTTON) && Walkable(x,y-1)){
-    y--;
+  if (ard.pressed(DOWN_BUTTON) && Walkable(x,y+1)){
+    y++;
     Moving = true;
     d = 1;
     }
-  if (ard.pressed(RIGHT_BUTTON)&& Walkable(x+1,y)){
+  if (ard.pressed(RIGHT_BUTTON) && Walkable(x+1,y)){
     x++;
     Moving = true;
     d = 2;
