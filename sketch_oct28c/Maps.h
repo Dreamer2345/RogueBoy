@@ -111,6 +111,9 @@ const uint8_t PROGMEM MAP_2[] = {
   //Objects
   //<ID><xpos><ypos><Health>
   1, 2, 2, 0,
+  2, 3, 3, 0,
+  3, 4, 4, 0,
+
 };
 
 byte Level;
