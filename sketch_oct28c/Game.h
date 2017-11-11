@@ -75,8 +75,8 @@ void UpdateMainMenu(){
 
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
-    int px = pgm_read_byte(&CLevel[2]);
-    int py = pgm_read_byte(&CLevel[3]);
+    int px = (pgm_read_byte(&CLevel[2])*16)+8;
+    int py = (pgm_read_byte(&CLevel[3])*16)+8;
     uint8_t index = OFFSET+MAP_SIZE+1;
     Init(px,py);
     memcpy_P(&Map[0], &CLevel[OFFSET], MAP_SIZE);
@@ -92,8 +92,8 @@ void LoadMAP(byte L){
     
     for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
-        px = pgm_read_byte(&CLevel[index++]);
-        py = pgm_read_byte(&CLevel[index++]);
+        px = (pgm_read_byte(&CLevel[index++])*16)+8;
+        py = (pgm_read_byte(&CLevel[index++])*16)+8;
         H = pgm_read_byte(&CLevel[index++]);
         switch (ID){
           case 1: Offs=12; break;
