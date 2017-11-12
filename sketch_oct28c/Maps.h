@@ -66,6 +66,42 @@
 */
 
 
+const uint8_t PROGMEM TEST_MAP[] = {
+  //Map Dimentions (unused)
+  MAP_HEIGHT, MAP_WIDTH,
+  //PLAYER STARTING POSITION
+  0, 0,
+  //MAP DATA
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 0, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 17, 16, 15, 14, 13, 12, 11, 10,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+  //Number of Objects
+  8,
+  //Objects
+  //<ID><xpos><ypos><Health>
+  1, 5, 2, 0,
+  2, 5, 3, 0,
+  3, 5, 4, 0,
+  4, 5, 5, 0,
+  5, 5, 6, 0,
+  6, 5, 7, 0,
+  7, 5, 8, 0,
+  8, 5, 9, 0,
+  //Number of Oparators
+  3,
+  //Oparator (Switch locations/active points)
+  //<xpos of switch><ypos of switch><x active><y active>
+  9,7,9,2,
+  9,7,9,3,
+  9,7,9,4,
+};
 
 
 
@@ -132,7 +168,7 @@ const uint8_t PROGMEM MAP_2[] = {
 
 byte Level;
 
-const uint8_t * Maps[] = { MAP_1, MAP_2 };
+const uint8_t * Maps[] = {TEST_MAP, MAP_1, MAP_2 };
 uint8_t Map[MAP_SIZE];
 
 int GetTileX(int x)
