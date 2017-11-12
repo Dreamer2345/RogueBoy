@@ -187,6 +187,7 @@ void SetBlock(int x, int y, uint8_t bl) {
 bool Walkable(int x, int y) {
   switch (GetBlock(GetTileX(x), GetTileY(y))) {
     case OPEN_DOOR:
+    case UP_STAIRS:
     case DOWN_STAIRS:
     case EMPTY:
     case OPEN_CHEST:
