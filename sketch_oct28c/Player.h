@@ -69,8 +69,8 @@ void PlayerClass::PlayerMovement() {
     else 
     {
         switch(d){
-          case 0: rely++; break;
-          case 1: rely--; break;
+          case 0: rely--; break;
+          case 1: rely++; break;
           case 2: relx++; break;
           case 3: relx--; break;
           }
