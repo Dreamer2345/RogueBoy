@@ -255,6 +255,8 @@ void UpdateEBlock(byte x,byte y){
       switch(GetBlock(x1,y1)){
         case SPEAR_DOOR: SetBlock(x1,y1,OPEN_DOOR); break;
         case OPEN_DOOR: SetBlock(x1,y1,SPEAR_DOOR); break;
+        case LOCKED_STAIRS: SetBlock(x1,y1,DOWN_STAIRS); break;
+        case DOWN_STAIRS: SetBlock(x1,y1,LOCKED_STAIRS); break;
         case EXPLOSIVE_BARREL: SetBlock(x1,y1,EMPTY); break;
       }
     }

@@ -2,6 +2,7 @@
 Arduboy2 ard;
 Sprites sprites;
 int POINTS = 0;
+bool Audio = true;
 #include "Global.h"
 #include "Game.h"
 
@@ -28,7 +29,6 @@ void loop() {
   switch(gameState)
   {
     case GameState::MainMenu: UpdateMainMenu(); break;
-    //case GameState::Settings: UpdateSettings(); break;
     case GameState::Game: UpdateGame(); break;
     case GameState::LoadMap: NextLevelLoad(); break;
     case GameState::MapEnding: MapEnding(); break;

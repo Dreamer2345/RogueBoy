@@ -60,8 +60,8 @@ void PlayerClass::PlayerMovement() {
   }
   
   if (ard.justPressed(A_BUTTON)){
-    int relx = x/16;
-    int rely = y/16;
+    int relx = GetTileX(x);
+    int rely = GetTileY(y);
     uint8_t bl = GetBlock(relx,rely);
     if (bl == DOWN_STAIRS){
       gameState = GameState::MapEnding;
@@ -80,6 +80,7 @@ void PlayerClass::PlayerMovement() {
           case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); UpdateEBlock(relx,rely); break;
           case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); Keys++; break;
           case LOCKED_DOOR: if (Keys > 0) {SetBlock(relx,rely,OPEN_DOOR); Keys--;} break;
+          case LOCKED_STAIRS: if (Keys > 0) {SetBlock(relx,rely,DOWN_STAIRS); Keys--;} break;
         }
     }
   

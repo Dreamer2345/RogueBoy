@@ -73,8 +73,12 @@ void DisplayPlayer(){
 void UpdateMainMenu(){
   sprites.drawSelfMasked(0,0,Logo,0);
   if (showarrow){sprites.drawOverwrite(20,55,Arrow,0);}
+  //if (Audio){sprites.drawOverwrite(1,1,Speaker,1);} else {sprites.drawOverwrite(1,1,Speaker,0);}
   if (ard.justPressed(A_BUTTON)){
     gameState = GameState::LoadMap;
+  }
+  if (ard.justPressed(B_BUTTON)){
+    Audio = !Audio;
   }
   if (ard.everyXFrames(30)) {
       showarrow = !showarrow;
