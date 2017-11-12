@@ -84,19 +84,18 @@ const uint8_t PROGMEM MAP_1[] = {
   8, 8, 8, 1, 8, 1, 2, 1, 1, 1,
   8, 8, 8, 1, 8, 1, 8, 1, 1, 1,
   8, 8, 8, 1, 8, 1, 3, 1, 1, 1,
-  8, 8, 8, 1, 8, 1, 1, 1, 1, 1,
   8, 8, 8, 15, 8, 1, 1, 1, 1, 1,
   //Number of Objects
   7,
   //Objects
   //<ID><xpos><ypos><Health>
+  1, 1, 2, 0,
   1, 1, 3, 0,
   1, 1, 4, 0,
   1, 1, 5, 0,
   1, 1, 6, 0,
   1, 1, 7, 0,
   1, 1, 8, 0,
-  1, 1, 9, 0,
   //Number of Oparators
   1,
   //Oparator (Switch locations/active points)
@@ -110,38 +109,10 @@ const uint8_t PROGMEM MAP_2[] = {
   //PLAYER STARTING POSITION
   0, 0,
   //MAP DATA
-  9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 3, 
-  //Number of Objects
-  0,
-  //Objects
-  //<ID><xpos><ypos><Health>
-  //Number of Oparators
-  0,
-  //Oparator (Switch locations/active points)
-  //<xpos of switch><ypos of switch><x active><y active>
-};
-
-const uint8_t PROGMEM MAP_3[] = {
-  //Map Dimentions (unused)
-  MAP_HEIGHT, MAP_WIDTH,
-  //PLAYER STARTING POSITION
-  0, 0,
-  //MAP DATA
-  9, 1, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 1, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 1, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 1, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 1, 8, 8, 8, 8, 8, 8, 8, 8,
+  9, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
