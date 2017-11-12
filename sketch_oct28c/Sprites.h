@@ -34,12 +34,12 @@ void SpriteClass::SpriteAI(){
             if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
             break;
             
-    case 7: if ((x < relx)&&(Walkable(x+2,y))) {x+=2;} else {if ((x > relx)&&(Walkable(x-2,y))) {x-=2;}}
-            if ((y < relx)&&(Walkable(x,y+2))) {y+=2;} else {if ((y > relx)&&(Walkable(x,y-2))) {y-=2;}}
+    case 7: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
+            if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
             break;
             
-    case 8: if ((x < relx)&&(Walkable(x+3,y))) {x+=3;} else {if ((x > relx)&&(Walkable(x-3,y))) {x-=3;}}
-            if ((y < relx)&&(Walkable(x,y+3))) {y+=3;} else {if ((y > relx)&&(Walkable(x,y-3))) {y-=3;}}
+    case 8: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
+            if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
             if ((Frame < 1)&&(ard.everyXFrames(30))) {Frame++;} else {Frame = 0;} break;
   }
 }
