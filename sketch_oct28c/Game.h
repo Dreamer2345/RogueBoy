@@ -15,7 +15,7 @@ void Init(int x,int y){
   playerobj.H = 100;
 }
 
-bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return (Max0 >= Min1) && (Min0 <= Max1);}
+bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 >= Min1) && (Min0 <= Max1));}
 
 bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
 
