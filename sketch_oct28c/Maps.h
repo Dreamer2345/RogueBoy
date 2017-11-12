@@ -39,7 +39,7 @@
 #define LOCKED_STAIRS  17
 
 #define EMPTY  8 //Walkable
-#define OFFSET 5
+#define OFFSET 4
 
 
 
