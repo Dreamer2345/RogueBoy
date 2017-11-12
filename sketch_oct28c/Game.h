@@ -144,8 +144,8 @@ void UpdateObjects(){
       if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
-            case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} break;
-            case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} break;
+            case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
+            case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
             case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
             }
       } else {
