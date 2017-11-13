@@ -105,7 +105,7 @@ const uint8_t PROGMEM TEST_MAP[] = {
 
 
 
-const uint8_t PROGMEM MAP_1[] = {
+const uint8_t PROGMEM MAP_2[] = {
   //Map Dimentions (unused)
   MAP_HEIGHT, MAP_WIDTH,
   //PLAYER STARTING POSITION
@@ -139,22 +139,22 @@ const uint8_t PROGMEM MAP_1[] = {
   6,0,3,9,
 };
 
-const uint8_t PROGMEM MAP_2[] = {
+const uint8_t PROGMEM MAP_1[] = {
   //Map Dimentions (unused)
   MAP_HEIGHT, MAP_WIDTH,
   //PLAYER STARTING POSITION
   0, 0,
   //MAP DATA
-  9, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 8, 8, 8, 8, 3,
+  9, 8, 8, 8, 1, 1, 1, 1, 1, 1,
+  8, 8, 8, 8, 1, 1, 1, 1, 1, 1,
+  8, 8, 8, 8, 1, 1, 1, 1, 1, 1,
+  8, 8, 8, 3, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   //Number of Objects
   0,
   //Objects

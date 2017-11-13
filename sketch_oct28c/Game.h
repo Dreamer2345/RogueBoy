@@ -87,8 +87,8 @@ void UpdateMainMenu(){
 
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
-    int px = (pgm_read_byte(&CLevel[2])*16)+8;
-    int py = (pgm_read_byte(&CLevel[3])*16)+8;
+    int px = (pgm_read_byte(&CLevel[2])*16)+4;
+    int py = (pgm_read_byte(&CLevel[3])*16)+4;
     uint8_t index = OFFSET+MAP_SIZE;
     Init(px,py);
     memcpy_P(&Map[0], &CLevel[OFFSET], MAP_SIZE);
@@ -107,8 +107,8 @@ void LoadMAP(byte L){
     
     for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
-        px = (pgm_read_byte(&CLevel[index++])*16)+8;
-        py = (pgm_read_byte(&CLevel[index++])*16)+8;
+        px = (pgm_read_byte(&CLevel[index++])*16)+4;
+        py = (pgm_read_byte(&CLevel[index++])*16)+4;
         H = pgm_read_byte(&CLevel[index++]);
         switch (ID){
           case 1: Offs=12; break; //Coin
@@ -188,11 +188,25 @@ void MapEnding(){
 }
 
 
+void DrawHud(){
+  ard.setCursor(0,0);
+  ard.print(F("L:"));
+  ard.print(Level);
+  ard.print(F("C:"));
+  ard.print(playerobj.Coins);
+  ard.print(F("K:"));
+  ard.print(playerobj.Keys);
+  ard.print(F("H:"));
+  ard.print(playerobj.H);
+  }
+
+
 void UpdateGame(){
   playerobj.PlayerMovement();
   UpdateObjects();
   DisplayEnviroment();
   DisplayPlayer();
   DisplayObjects();
+  DrawHud();
 }
 
