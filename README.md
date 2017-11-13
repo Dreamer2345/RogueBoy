@@ -7,6 +7,8 @@ Graphics testing for [WIP]ROUGEBOY for the Arduboy.
 
 -A = Interact
 
+-B = Fire!
+
 * Keys subject to change
 
 
