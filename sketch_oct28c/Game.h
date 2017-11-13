@@ -154,12 +154,31 @@ void UpdateObjects(){
         }
       }
   }
+  for (byte j=0;j<3;j++){
+    if (Bullet[j].GetActive()){
+      Bullet[j].UPPos(playerobj.x,playerobj.y);
+      Bullet[j].Update();
+    }
+  }
+    for (byte i=0;i<ONum;i++){
+      for (byte j=0;j<3;j++){
+        if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX(),Objects[i].GetY(),Bullet[j].GetX(),Bullet[j].GetY()))){
+          Objects[i].SetActive(false);
+          Bullet[j].Kill();
+        }
+      }
+    }
 }
 
 void DisplayObjects() {
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
     Objects[i].Display();
+    }
+  }
+  for (byte i=0;i<3;i++){
+    if (Bullet[i].GetActive()){
+      Bullet[i].Display();
     }
   }
 }

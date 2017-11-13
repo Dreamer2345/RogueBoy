@@ -1,5 +1,5 @@
 #pragma once
-#define MAXOBJECT 25
+#define MAXOBJECT 15
 #define MAXENVIROMENT 15
 #define CENTERX 63
 #define CENTERY 31

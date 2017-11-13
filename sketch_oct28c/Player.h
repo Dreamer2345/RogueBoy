@@ -20,6 +20,53 @@ class PlayerClass {
   void PlayerMovement();
 };
 
+class BulletClass{
+  public:
+  BulletClass(){}  
+  void Update();
+  void Display();
+  bool GetActive() {return Active;}
+  byte GetX(){return x;}
+  byte GetY(){return y;}
+  void UPPos(int _x,int _y){relx = _x; rely = _y;};
+  void Kill(){Active = false;}
+  void SetBullet(unsigned _x,unsigned _y,byte _d){x = _x; y = _y; d = _d; Active = true;}
+  private:
+  unsigned relx;
+  unsigned rely;
+  unsigned x;
+  unsigned y;
+  byte d;
+  bool Active;
+};
+
+
+void BulletClass::Update(){
+  if (!Active){return;}
+  unsigned rx = x;
+  unsigned ry = y;
+  switch(d){
+    case 0: ry--; break;
+    case 1: ry++; break;
+    case 2: rx++; break;
+    case 3: rx--; break;
+    };
+  if (Walkable(rx,ry)) {
+    x = rx;
+    y = ry;
+    }
+  else {Active = false;}
+}
+
+void BulletClass::Display(){
+  int _x = (relx-x)-4;
+  int _y = (rely-y)-4;
+  sprites.drawOverwrite(CENTERX-_x,CENTERY-_y,SpriteEnviroment,(18+d));
+}
+
+BulletClass Bullet[3];
+
+
 
 
 void PlayerClass::PlayerMovement() {
@@ -44,19 +91,19 @@ void PlayerClass::PlayerMovement() {
     Moving = true;
     d = 3;
     }   
-
-
-
-
-
-
-
-
-
-  
+    
   if (ard.pressed(A_BUTTON+B_BUTTON)){
     gameState = GameState::MainMenu;
     Level = 0;
+  }
+
+  if (ard.justPressed(B_BUTTON)){
+    for (byte i=0;i<3;i++){
+      if (!Bullet[i].GetActive()){
+        Bullet[i].SetBullet(x,y,d);
+      }
+    }
+  
   }
   
   if (ard.justPressed(A_BUTTON)){
