@@ -116,9 +116,10 @@ void LoadMAP(byte L){
           case 3: Offs=9; break; //Jelly Filled Doughnut
           case 4: Offs=10; break; //Key
           case 5: Offs=11; break; //Ham
-          case 6: Offs=4; break; //Monsters VVVV
-          case 7: Offs=5; break;
-          case 8: Offs=6; break;
+          case 6: Offs=3; break; //Floater
+          case 7: Offs=4; break; //Skull
+          case 8: Offs=5; break; //Spider
+          case 9: Offs=6; break //Bat
         }
         Objects[i].setSprite(px,py,H,ID,Offs,true);
     }

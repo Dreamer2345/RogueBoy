@@ -46,10 +46,10 @@ void BulletClass::Update(){
   unsigned rx = x;
   unsigned ry = y;
   switch(d){
-    case 0: ry--; break;
-    case 1: ry++; break;
-    case 2: rx++; break;
-    case 3: rx--; break;
+    case 0: ry-=2; break;
+    case 1: ry+=2; break;
+    case 2: rx+=2; break;
+    case 3: rx-=2; break;
     };
   if (Walkable(rx,ry)) {
     x = rx;
