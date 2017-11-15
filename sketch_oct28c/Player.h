@@ -101,6 +101,7 @@ void PlayerClass::PlayerMovement() {
     for (byte i=0;i<3;i++){
       if (Bullet[i].GetActive() == false){
         Bullet[i].SetBullet(x,y,d);
+        break;
       }
     }
   
