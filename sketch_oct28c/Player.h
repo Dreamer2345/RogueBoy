@@ -61,7 +61,7 @@ void BulletClass::Update(){
 void BulletClass::Display(){
   int _x = (relx-x)-4;
   int _y = (rely-y)-4;
-  sprites.drawOverwrite(CENTERX-_x,CENTERY-_y,SpriteEnviroment,(18+d));
+  sprites.drawSelfMasked(CENTERX-_x,CENTERY-_y,SpriteEnviroment,(18+d));
 }
 
 BulletClass Bullet[3];
@@ -99,7 +99,7 @@ void PlayerClass::PlayerMovement() {
 
   if (ard.justPressed(B_BUTTON)){
     for (byte i=0;i<3;i++){
-      if (!Bullet[i].GetActive()){
+      if (Bullet[i].GetActive() == false){
         Bullet[i].SetBullet(x,y,d);
       }
     }
