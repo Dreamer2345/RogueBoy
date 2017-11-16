@@ -61,8 +61,7 @@ void BulletClass::Update(){
 void BulletClass::Display(){
   int _x = (relx-x)-4;
   int _y = (rely-y)-4;
-  if (d >= 3) sprites.drawExternalMask(CENTERX-_x,CENTERY-_y,SpriteEnviroment,BulletMask,(18+d),1);
-  else sprites.drawExternalMask(CENTERX-_x,CENTERY-_y,SpriteEnviroment,BulletMask,(18+d),0);
+  sprites.drawExternalMask(CENTERX-_x,CENTERY-_y,SpriteEnviroment,SpriteMask,(18+d),(18+d));
 }
 
 BulletClass Bullet[3];
