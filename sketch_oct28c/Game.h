@@ -119,7 +119,7 @@ void LoadMAP(byte L){
           case 6: Offs=3; break; //Floater
           case 7: Offs=4; break; //Skull
           case 8: Offs=5; break; //Spider
-          case 9: Offs=6; break //Bat
+          case 9: Offs=6; break; //Bat
         }
         Objects[i].setSprite(px,py,H,ID,Offs,true);
     }
