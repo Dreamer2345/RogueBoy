@@ -29,7 +29,7 @@ class SpriteClass{
 
 void SpriteClass::SpriteAI(){
   switch(type){
-    case 1: if ((Frame < 5)&&(ard.everyXFrames(12))) {Frame++;} else {Frame = 0;} break;
+    case 1: if ((Frame < 5)&&(ard.everyXFrames(24))) {Frame++;} else {Frame = 0;} break;
     case 6: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
             if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
             break;

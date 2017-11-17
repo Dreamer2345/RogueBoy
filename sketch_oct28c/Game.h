@@ -58,7 +58,7 @@ void DisplayPlayer(){
   ard.print(F("OY: "));
   ard.println(offsetY);*/
 	
-  if ((playerobj.Moving) && (ard.everyXFrames(15))){
+  if ((playerobj.Moving) && (ard.everyXFrames(30))){
         playerobj.Frame = !playerobj.Frame;
         if (playerobj.Frame){
         sprites.drawOverwrite(CENTERX-4,CENTERY-4,SpriteEnviroment,1);
