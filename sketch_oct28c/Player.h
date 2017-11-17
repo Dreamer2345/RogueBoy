@@ -16,7 +16,7 @@ class PlayerClass {
   byte Keys;
   byte Coins;
   bool Moving;
-  bool Frame;
+  uint8_t Frame;
   void PlayerMovement();
 };
 

@@ -103,6 +103,67 @@ const uint8_t PROGMEM TEST_MAP[] = {
   9,7,9,4,
 };
 
+const uint8_t PROGMEM MAP_4[] = {
+  //Map Dimentions (unused)
+  MAP_HEIGHT, MAP_WIDTH,
+  //PLAYER STARTING POSITION
+  0, 0,
+  //MAP DATA
+  1, 1, 1, 8, 1, 1, 1, 8, 1, 1,
+  8, 8, 1, 8, 1, 8, 1, 8, 1, 8,
+  1, 1, 1, 1, 1, 8, 1, 1, 1, 1,
+  1, 8, 1, 8, 1, 8, 1, 8, 1, 8,
+  1, 8, 1, 8, 1, 8, 8, 8, 1, 1,
+  8, 8, 1, 8, 1, 8, 1, 8, 1, 8,
+  1, 1, 1, 8, 1, 1, 1, 1, 1, 1,
+  1, 8, 8, 8, 8, 8, 8, 8, 1, 8,
+  1, 1, 1, 2, 3, 8, 0, 1, 1, 1,
+  1, 8, 8, 8, 8, 8, 8, 8, 1, 8,
+  //Number of Objects
+  0,
+  //Objects
+  //<ID><xpos><ypos><Health>
+  //Number of Oparators
+  1,
+  //Oparator (Switch locations/active points)
+  //<xpos of switch><ypos of switch><x active><y active>
+  6,8,3,8,
+};
+
+
+const uint8_t PROGMEM MAP_3[] = {
+  //Map Dimentions (unused)
+  MAP_HEIGHT, MAP_WIDTH,
+  //PLAYER STARTING POSITION
+  1, 1,
+  //MAP DATA
+  1,  9,  1,  1,  1, 1, 1, 1, 1, 1,
+  11, 8, 8,   15, 8, 8, 1, 1, 1, 1,
+  1,  8,  8,  15, 8, 3, 1, 1, 1, 1,
+  1,  15, 15, 1,  1, 1, 1, 1, 1, 1,
+  1,  8,  8,  1,  8, 8, 1, 1, 1, 1,
+  1,  8,  8,  16, 8, 8, 1, 1, 1, 1,
+  1,  11,  8, 16, 8, 8, 1, 1, 1, 1,
+  1,  1,  1,  1,  1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  //Number of Objects
+  3,
+  //Objects
+  //<ID><xpos><ypos><Health>
+  8,1,4,100,
+  8,2,4,100,
+  8,4,4,100,
+  //Number of Oparators
+  6,
+  //Oparator (Switch locations/active points)
+  //<xpos of switch><ypos of switch><x active><y active>
+  0,1,1,3,
+  0,1,2,3,
+  1,6,3,5,
+  1,6,3,6,
+  5,6,3,1,
+};
 
 
 const uint8_t PROGMEM MAP_2[] = {
