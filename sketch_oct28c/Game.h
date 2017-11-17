@@ -17,7 +17,7 @@ void Init(int x,int y){
 
 bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 >= Min1) && (Min0 <= Max1));}
 
-bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
+bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+7,x1,x1+7)&&Intersect(y,y+7,y1,y1+7));}
 
 
 
@@ -60,16 +60,16 @@ void DisplayPlayer(){
 	const uint8_t PlayerFrames[] = { 0, 1, 0, 2 };
   if(!playerobj.Moving)
   {
-    sprites.drawOverwrite(CENTERX - 4, CENTERY - 4, SpriteEnviroment, 0);
+    sprites.drawExternalMask(CENTERX - 4, CENTERY - 4, SpriteEnviroment,SpriteMask,0,0);
   }
   else
   {
     if(ard.everyXFrames(15))
     {
-      ++playerObj.Frame;
+      ++playerobj.Frame;
       playerobj.Frame %= 4;
     }
-    sprites.drawOverwrite(CENTERX - 4,CENTERY - 4, SpriteEnviroment, PlayerFrames[playerobj.Frame]);
+    sprites.drawExternalMask(CENTERX - 4, CENTERY - 4, SpriteEnviroment,SpriteMask,PlayerFrames[playerobj.Frame],PlayerFrames[playerobj.Frame]);
   }
 }
 
@@ -145,7 +145,7 @@ void NextLevelLoad(){
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
-      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
+      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x-4,playerobj.y-4)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
