@@ -58,7 +58,7 @@ void DisplayPlayer(){
   ard.print(F("OY: "));
   ard.println(offsetY);*/
 	const uint8_t PlayerFrames[] = { 0, 1, 0, 2 };
-  if(!playerObj.Moving)
+  if(!playerobj.Moving)
   {
     sprites.drawOverwrite(CENTERX - 4, CENTERY - 4, SpriteEnviroment, 0);
   }
@@ -67,9 +67,9 @@ void DisplayPlayer(){
     if(ard.everyXFrames(15))
     {
       ++playerObj.Frame;
-      playerObj.Frame %= 4;
+      playerobj.Frame %= 4;
     }
-    sprites.drawOverwrite(CENTERX - 4,CENTERY - 4, SpriteEnviroment, PlayerFrames[playerObj.Frame]);
+    sprites.drawOverwrite(CENTERX - 4,CENTERY - 4, SpriteEnviroment, PlayerFrames[playerobj.Frame]);
   }
 }
 
