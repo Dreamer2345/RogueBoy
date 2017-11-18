@@ -170,7 +170,7 @@ void NextLevelLoad(){
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
-      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x-8,playerobj.y-8)){
+      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
