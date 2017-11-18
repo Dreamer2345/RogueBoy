@@ -5,13 +5,15 @@ PlayerClass playerobj;
 SpriteClass Objects[MAXOBJECT];
 
 byte ONum = 0;
-
+byte Diff = 1;
 
 
 void Init(int x,int y){
   playerobj.x = x;
   playerobj.y = y;
   playerobj.d = 0;
+  playerobj.Coins = 0;
+  playerobj.Keys = 0;
   playerobj.H = 100;
 }
 
@@ -158,9 +160,11 @@ void LoadMAP(byte L){
 }
 
 void NextLevelLoad(){
-  LoadMAP(Level);
-  Level++; 
-  gameState = GameState::Game;
+  if (Level < MAXLEVEL){
+    LoadMAP(Level);
+    Level++; 
+    gameState = GameState::Game;
+  } else {gameState = GameState::Dead;}
 }
 
 void UpdateObjects(){
@@ -172,6 +176,13 @@ void UpdateObjects(){
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
             case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
             case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
+
+            case 6: if (ard.everyXFrames(60)) {playerobj.H -= 10*Diff;} break;
+            case 7: if (ard.everyXFrames(60)) {playerobj.H -= 5*Diff;} break;
+            case 8: if (ard.everyXFrames(60)) {playerobj.H -= 2*Diff;} break;
+            case 9: if (ard.everyXFrames(60)) {playerobj.H -= 1*Diff;} break;
+
+            
             }
       } else {
         Objects[i].UPPos(playerobj.x,playerobj.y);
@@ -188,7 +199,7 @@ void UpdateObjects(){
     for (byte i=0;i<ONum;i++){
       for (byte j=0;j<3;j++){
         if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX(),Objects[i].GetY(),Bullet[j].GetX(),Bullet[j].GetY()))){
-          Objects[i].SetActive(false);
+          Objects[i].Damage();
           Bullet[j].Kill();
         }
       }
@@ -208,6 +219,14 @@ void DisplayObjects() {
   }
 }
 
+void Death(){
+  sprites.drawOverwrite(CENTERX-7,CENTERY-7,Flowers,0);
+  ard.print(F("SCORED:"));
+  ard.println(POINTS);
+  ard.print(F("GotToLevel:"));
+  ard.println(Level);
+  if (ard.justPressed(A_BUTTON)||ard.justPressed(B_BUTTON)){gameState = GameState::MainMenu; Level = 0; POINTS = 0;}
+  }
 
 void MapEnding(){
     int padd = playerobj.Coins * 5;    
@@ -252,5 +271,6 @@ void UpdateGame(){
   DisplayPlayer();
   DisplayObjects();
   DrawHud();
+  if (playerobj.H <= 0) {gameState = GameState::Dead;}
 }
 

@@ -1,4 +1,5 @@
 #pragma once
+#define MAXLEVEL 4
 #define MAXOBJECT 15
 #define MAXENVIROMENT 15
 #define CENTERX 63
@@ -231,7 +232,7 @@ const uint8_t PROGMEM MAP_1[] = {
 
 byte Level;
 
-const uint8_t * Maps[] = {TEST_MAP, MAP_1, MAP_2 };
+const uint8_t * Maps[] = {TEST_MAP, MAP_1, MAP_2 ,MAP_3,MAP_4};
 uint8_t Map[MAP_SIZE];
 
 int GetTileX(int x)

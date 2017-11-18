@@ -9,6 +9,7 @@ class SpriteClass{
     void UPPos(int _x,int _y){relx = _x; rely = _y;};
     void SpriteAI();
     void Display();
+    void Damage();
     byte GetFrame(){return Frame;}
     byte GetType(){return type;}
     bool IsActive(){return Active;}
@@ -27,6 +28,12 @@ class SpriteClass{
     bool Active;
   };
 
+
+void SpriteClass::Damage(){
+  H -= 10;
+  if (H <= 0){Active = false;}  
+  }
+  
 void SpriteClass::SpriteAI(){
   switch(type){
     case 1: if (ard.everyXFrames(24)) { ++Frame; Frame %= 6; } break;
