@@ -22,7 +22,7 @@ class SpriteClass{
     int y;
     int relx;
     int rely;
-    byte H;
+    short int H;
     byte type;
     byte Frame;
     bool Active;
@@ -59,6 +59,6 @@ void SpriteClass::SpriteAI(){
 void SpriteClass::Display(){
   int _x = (relx-x);
   int _y = (rely-y);
-  sprites.drawExternalMask(CENTERX-4-_x,CENTERY-4-_y,SpriteEnviroment,SpriteMask,(Frame+offset),(Frame+offset));
+  sprites.drawExternalMask((CENTERX-4)-_x,(CENTERY-4)-_y,SpriteEnviroment,SpriteMask,(Frame+offset),(Frame+offset));
 }
 
