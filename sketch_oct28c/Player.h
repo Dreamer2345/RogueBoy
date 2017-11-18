@@ -100,7 +100,7 @@ void PlayerClass::PlayerMovement() {
   if (ard.justPressed(B_BUTTON)){
     for (byte i=0;i<3;i++){
       if (Bullet[i].GetActive() == false){
-        Bullet[i].SetBullet(x+4,y+4,d);
+        Bullet[i].SetBullet(x,y,d);
         break;
       }
     }
