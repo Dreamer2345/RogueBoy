@@ -92,7 +92,7 @@ void UpdateMainMenu(){
 void TitleText(){
   ard.print((char)TitleSequenceText[showarrow]);
   showarrow++;
-  if ((showarrow > 192)||(ard.justPressed(A_BUTTON))){gamestate = GameState::MainMenu;}
+  if ((showarrow > 192)||(ard.justPressed(A_BUTTON))){gameState = GameState::MainMenu; showarrow = 0;}
 }
 
 
