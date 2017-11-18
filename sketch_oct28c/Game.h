@@ -44,21 +44,6 @@ void DisplayEnviroment()
 }
 
 void DisplayPlayer(){	
-  // Debugging Stuff
-  /*int tileX = GetTileX(playerobj.x);
-  int tileY = GetTileY(playerobj.y);
-  int offsetX = GetTileXOffset(playerobj.x);
-  int offsetY = GetTileYOffset(playerobj.y);
-  
-  ard.setCursor(0,0);
-  ard.print(F("TX: "));
-  ard.println(tileX);
-  ard.print(F("TY: "));
-  ard.println(tileY);
-  ard.print(F("OX: "));
-  ard.println(offsetX);
-  ard.print(F("OY: "));
-  ard.println(offsetY);*/
 	const uint8_t PlayerFrames[] = { 0, 1, 0, 2 };
   if(!playerobj.Moving)
   {
@@ -94,21 +79,18 @@ void UpdateMainMenu(){
 void TitleText(){
   if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
   byte ofs = 0;
-  if (showarrow > 168){
-      ofs = 42;
-  }
-  ard.setCursor(0, 0);
-  for(char i = ofs; i < showarrow; ++i) {
-      ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
-  }
-  
   if (!Audio) {
-      if (ard.everyXFrames(15)) {      
-        showarrow++;
+      if (showarrow > 168){ofs = 42;}
+      ard.setCursor(0, 0);
+      for(char i = ofs; i < showarrow; i++) {
+          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       }
+      if (ard.everyXFrames(15)) {showarrow++;}
       if (showarrow > 192){Audio = true; showarrow = 0;}
   }
   else {
+      for(char i = 48; i < 192; i++) {
+          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
       if (ard.everyXFrames(5)) { showarrow++; }
       if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}

@@ -15,7 +15,6 @@ void setup() {
   ard.clear();
   ard.setTextWrap(true);
   Level = 0;
-  ard.setTextWrap(true);
 }
 
 
