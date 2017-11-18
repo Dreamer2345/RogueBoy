@@ -93,9 +93,12 @@ void UpdateMainMenu(){
 
 void TitleText(){
   if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
-
+  byte ofs = 0;
+  if (showarrow > 168){
+      ofs = 42;
+  }
   ard.setCursor(0, 0);
-  for(char i = 0; i < showarrow; ++i) {
+  for(char i = ofs; i < showarrow; ++i) {
       ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
   }
   
