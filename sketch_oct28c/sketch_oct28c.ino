@@ -15,7 +15,7 @@ void setup() {
   ard.clear();
   ard.setTextWrap(true);
   Level = 0;
-  
+  ard.setTextWrap(true);
 }
 
 
@@ -25,10 +25,7 @@ void loop() {
     return;
 
   ard.pollButtons();
-  if (gameState != GameState::TextTitle)
-      {      
-      ard.clear();
-      }
+  ard.clear();
 
   switch(gameState)
   {
