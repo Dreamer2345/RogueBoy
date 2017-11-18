@@ -19,7 +19,7 @@ void Init(int x,int y){
 
 bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 > Min1) && (Min0 < Max1));}
 
-bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+7,x1,x1+7)&&Intersect(y,y+7,y1,y1+7));}
+bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
 
 
 
@@ -170,7 +170,7 @@ void NextLevelLoad(){
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
-      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
+      if (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,playerobj.x-4,playerobj.y-4)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
@@ -198,7 +198,7 @@ void UpdateObjects(){
   }
     for (byte i=0;i<ONum;i++){
       for (byte j=0;j<3;j++){
-        if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX(),Objects[i].GetY(),Bullet[j].GetX(),Bullet[j].GetY()))){
+        if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,Bullet[j].GetX()-4,Bullet[j].GetY()-4))){
           Objects[i].Damage();
           Bullet[j].Kill();
         }
