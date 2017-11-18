@@ -13,5 +13,5 @@ Graphics testing for [WIP]ROUGEBOY for the Arduboy.
 
 
 TO DO:
-* Game over screen
+* ReDo Game over screen
 * Music Possibly?
