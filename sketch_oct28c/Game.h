@@ -15,7 +15,7 @@ void Init(int x,int y){
   playerobj.H = 100;
 }
 
-bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 >= Min1) && (Min0 <= Max1));}
+bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 > Min1) && (Min0 < Max1));}
 
 bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+7,x1,x1+7)&&Intersect(y,y+7,y1,y1+7));}
 
@@ -145,7 +145,7 @@ void NextLevelLoad(){
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
-      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x-4,playerobj.y-4)){
+      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x-8,playerobj.y-8)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;

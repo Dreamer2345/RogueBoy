@@ -18,6 +18,7 @@
 
 #define BARREL  4
 #define EXPLOSIVE_BARREL  16
+#define RUBBLE 18
 
 #define LOCKED_DOOR  2
 #define OPEN_DOOR  6 //walkable
@@ -288,6 +289,7 @@ bool Walkable(int x, int y) {
     case DOWN_STAIRS:
     case EMPTY:
     case OPEN_CHEST:
+    case RUBBLE:
     	return true;
     default:
     	return false;
@@ -325,7 +327,7 @@ void UpdateEBlock(byte x,byte y){
         case OPEN_DOOR: SetBlock(x1,y1,SPEAR_DOOR); break;
         case LOCKED_STAIRS: SetBlock(x1,y1,DOWN_STAIRS); break;
         case DOWN_STAIRS: SetBlock(x1,y1,LOCKED_STAIRS); break;
-        case EXPLOSIVE_BARREL: SetBlock(x1,y1,EMPTY); break;
+        case EXPLOSIVE_BARREL: SetBlock(x1,y1,RUBBLE); break;
       }
     }
   }
