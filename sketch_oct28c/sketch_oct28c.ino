@@ -13,6 +13,7 @@ bool Audio = true;
 void setup() {
   ard.begin();
   ard.clear();
+  ard.setTextWrap(true);
   Level = 0;
   ard.setTextWrap(true);
 }
