@@ -97,7 +97,14 @@ void TitleText(){
     {
     if (ard.everyXFrames(15)) 
       {
-      ard.print((char)TitleSequenceText[showarrow]);
+      byte ofs = 0;
+      if (showarrow > 168){
+        ofs = 21;
+        }
+      
+      for(char i=ofs;i<showarrow;i++){
+          ard.print((char)pgm_read_byte(&TitleSequenceText[showarrow]));
+          }
       showarrow++;
       }
     if (showarrow > 192){Audio = true; showarrow = 0;}
