@@ -89,14 +89,14 @@ const uint8_t PROGMEM TEST_MAP[] = {
   8,
   //Objects
   //<ID><xpos><ypos><Health>
-  1, 5, 2, 0,
-  2, 5, 3, 0,
-  3, 5, 4, 0,
-  4, 5, 5, 0,
-  5, 5, 6, 0,
-  6, 5, 7, 0,
-  7, 5, 8, 0,
-  8, 5, 9, 0,
+  1, 5, 2, 1,
+  2, 5, 3, 1,
+  3, 5, 4, 1,
+  4, 5, 5, 1,
+  5, 5, 6, 1,
+  6, 5, 7, 1,
+  7, 5, 8, 1,
+  8, 5, 9, 1,
   //Number of Oparators
   3,
   //Oparator (Switch locations/active points)
@@ -154,9 +154,9 @@ const uint8_t PROGMEM MAP_3[] = {
   3,
   //Objects
   //<ID><xpos><ypos><Health>
-  8,1,4,100,
-  8,2,4,100,
-  8,4,4,100,
+  8,1,4,10,
+  8,2,4,10,
+  8,4,4,10,
   //Number of Oparators
   6,
   //Oparator (Switch locations/active points)
