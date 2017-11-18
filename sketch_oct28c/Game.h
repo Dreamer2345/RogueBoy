@@ -92,22 +92,24 @@ void UpdateMainMenu(){
 
 
 void TitleText(){
-  if (ard.justPressed(A_BUTTON)){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
-  if (!Audio)
-    {
-    if (ard.everyXFrames(15)) 
-      {
-      ard.print((char)TitleSequenceText[showarrow]);
-      showarrow++;
+  if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
+
+  ard.setCursor(0, 0);
+  for(char i = 0; i < showarrow; ++i) {
+      ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+  }
+  
+  if (!Audio) {
+      if (ard.everyXFrames(15)) {      
+        showarrow++;
       }
-    if (showarrow > 192){Audio = true; showarrow = 0;}
-    }
-  else
-    {
+      if (showarrow > 192){Audio = true; showarrow = 0;}
+  }
+  else {
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
       if (ard.everyXFrames(5)) { showarrow++; }
       if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
-    }
+  }
 }
 
 
