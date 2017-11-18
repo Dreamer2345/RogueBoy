@@ -88,6 +88,14 @@ void UpdateMainMenu(){
       }
 }
 
+
+void TitleText(){
+  ard.print((char)TitleSequenceText[showarrow]);
+  showarrow++;
+  if ((showarrow > 192)||(ard.justPressed(A_BUTTON))){gamestate = GameState::MainMenu;}
+}
+
+
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
     int px = (pgm_read_byte(&CLevel[2])*16)+4;

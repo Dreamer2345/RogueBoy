@@ -4,8 +4,8 @@
 
 #include "Maps.h"
 
-enum class GameState { MainMenu, Settings, Game ,LoadMap ,GameOver, MapEnding};
-GameState gameState = GameState::MainMenu;
+enum class GameState { MainMenu, Settings, Game ,LoadMap ,GameOver, MapEnding, TextTitle};
+GameState gameState = GameState::TextTitle;
 
 class PlayerClass {
   public:

@@ -24,7 +24,10 @@ void loop() {
     return;
 
   ard.pollButtons();
-  ard.clear();
+  if (gameState != GameState::TextTitle)
+      {      
+      ard.clear();
+      }
 
   switch(gameState)
   {
