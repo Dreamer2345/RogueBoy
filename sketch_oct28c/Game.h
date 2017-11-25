@@ -77,25 +77,27 @@ void UpdateMainMenu(){
 
 
 void TitleText(){
-  if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
-  byte ofs = 0;
-  if (!Audio) {
-      if (showarrow > 168){ofs = 42;}
-      ard.setCursor(0, 0);
-      for(uint8_t i = ofs; i < showarrow; i++) {
-          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
-      }
-      if (ard.everyXFrames(15)) {showarrow++;}
-      if (showarrow > 192){Audio = true; showarrow = 0;}
-  }
+  if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; } 
   else {
-      for(uint8_t i = 48; i < 192; i++) {
-          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
-      }
-      sprites.drawOverwrite(0,64-showarrow,Logo,0);
-      showarrow++; 
-      if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
-  }
+	  byte ofs = 0;
+	  if (!Audio) {
+	      if (showarrow > 168){ofs = 42;}
+	      ard.setCursor(0, 0);
+	      for(uint8_t i = ofs; i < showarrow; i++) {
+		  ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+	      }
+	      if (ard.everyXFrames(15)) {showarrow++;}
+	      if (showarrow > 192){Audio = true; showarrow = 0;}
+	  }
+	  else {
+	      for(uint8_t i = 48; i < 192; i++) {
+		  ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+	      }
+	      sprites.drawOverwrite(0,64-showarrow,Logo,0);
+	      showarrow++; 
+	      if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
+	  }
+  	}
 }
 
 
