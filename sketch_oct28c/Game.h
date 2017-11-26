@@ -94,7 +94,7 @@ void TitleText(){
           ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       }
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
-      if (ard.everyXFrames(5)) { showarrow++; }
+      showarrow++;
       if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
   }
  }
