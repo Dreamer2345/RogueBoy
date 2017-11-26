@@ -37,21 +37,21 @@ void SpriteClass::Damage(){
 void SpriteClass::SpriteAI(){
   switch(type){
     case 1: if (ard.everyXFrames(24)) { ++Frame; Frame %= 6; } break;
-    case 6: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
+    case 6:            
+    case 7:     
+    case 8:   
+            if (GetDist(x,y,relx,rely) < 15){
+            if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
             if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
+            }
             break;
-            
-    case 7: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
+    case 9: 
+            if (GetDist(x,y,relx,rely) < 15){
+            if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
             if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
+            if (ard.everyXFrames(24)) { ++Frame; Frame %= 2; } 
+            }
             break;
-            
-    case 8: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
-            if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
-            break;        
-            
-    case 9: if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
-            if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
-            if (ard.everyXFrames(24)) { ++Frame; Frame %= 2; } break;
   }
 }
 
