@@ -14,6 +14,7 @@
 #define MAP_SIZE MAP_HEIGHT*MAP_WIDTH
 
 
+
 #define CLOSED_CHEST  0
 #define OPEN_CHEST  5 //Walkable
 
@@ -42,10 +43,28 @@
 
 #define EMPTY  8 //Walkable
 #define OFFSET 4
+/*
+uint8_t enum Block {CLOSED_CHEST,
+                    BLANK_WALL,
+                    LOCKED_DOOR,
+                    DOWN_STAIRS,
+                    BARREL,
+                    OPEN_CHEST,
+                    OPEN_DOOR,
+                    FULL_BLOCK_WALL,
+                    EMPTY,
+                    UP_STAIRS,
+                    SWITCH_ON,
+                    SWITCH_OFF,
+                    TORCH_WALL,
+                    WINDOW_WALL,
+                    SIGN_WALL,
+                    SPEAR_DOOR,
+                    EXPLOSIVE_BARREL,
+                    LOCKED_STAIRS,
+                    RUBBLE};
 
-//enum uint8_t Block {CLOSED_CHEST,BLANK_WALL,LOCKED_DOOR,DOWN_STAIRS,BARREL,OPEN_CHEST,OPEN_DOOR,FULL_BLOCK_WALL,EMPTY,UP_STAIRS,SWITCH_ON,SWITCH_OFF,TORCH_WALL,WINDOW_WALL,SIGN_WALL,SPEAR_DOOR,EXPLOSIVE_BARREL,LOCKED_STAIRS,RUBBLE}
-
-
+*/
 /*
    MAP DEFINITIONS
    0 - Closed_chest
@@ -285,16 +304,23 @@ void SetBlock(int x, int y, uint8_t bl) {
 
 
 bool Walkable(int x, int y) {
-  switch (GetBlock(GetTileX(x), GetTileY(y))) {
-    case OPEN_DOOR:
-    case UP_STAIRS:
-    case DOWN_STAIRS:
-    case EMPTY:
-    case OPEN_CHEST:
-    case RUBBLE:
-    	return true;
-    default:
-    	return false;
+  uint8_t p[4];
+  bool Walk = true; 
+  p[0] = (GetBlock(GetTileX(x-4), GetTileY(y-4)));
+  p[1] = (GetBlock(GetTileX(x+4), GetTileY(y-4)));
+  p[2] = (GetBlock(GetTileX(x-4), GetTileY(y+4)));
+  p[3] = (GetBlock(GetTileX(x+4), GetTileY(y+4)));
+  for (byte i=0; i<4;i++){
+    switch (p[i]) {
+      case OPEN_DOOR:
+      case UP_STAIRS:
+      case DOWN_STAIRS:
+      case EMPTY:
+      case OPEN_CHEST:
+      case RUBBLE:
+      default:
+      	Walk = false;
+      }
   }
 }
 

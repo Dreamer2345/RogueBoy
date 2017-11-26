@@ -77,27 +77,25 @@ void UpdateMainMenu(){
 
 
 void TitleText(){
-  if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; } 
+  if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
+  byte ofs = 0;
+  if (!Audio) {
+      if (showarrow > 168){ofs = 42;}
+      ard.setCursor(0, 0);
+      for(uint8_t i = ofs; i < showarrow; i++) {
+          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+      }
+      if (ard.everyXFrames(15)) {showarrow++;}
+      if (showarrow > 192){Audio = true; showarrow = 0;}
+  }
   else {
-	  byte ofs = 0;
-	  if (!Audio) {
-	      if (showarrow > 168){ofs = 42;}
-	      ard.setCursor(0, 0);
-	      for(uint8_t i = ofs; i < showarrow; i++) {
-		  ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
-	      }
-	      if (ard.everyXFrames(15)) {showarrow++;}
-	      if (showarrow >= 192){Audio = true; showarrow = 0;}
-	  }
-	  else {
-	      for(uint8_t i = 48; i < 192; i++) {
-		  ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
-	      }
-	      sprites.drawOverwrite(0,64-showarrow,Logo,0);
-	      showarrow++; 
-	      if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
-	  }
-  	}
+      for(uint8_t i = 48; i < 192; i++) {
+          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+      }
+      sprites.drawOverwrite(0,64-showarrow,Logo,0);
+      if (ard.everyXFrames(5)) { showarrow++; }
+      if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
+  }
 }
 
 
@@ -140,7 +138,7 @@ void LoadMAP(byte L){
         Objects[i].setSprite(px,py,H,ID,Offs,true);
     }
     ENum = pgm_read_byte(&CLevel[index++]);
-    for (int i=0; i<ONum; i++){
+    for (int i=0; i<ENum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
         Offs = pgm_read_byte(&CLevel[index++]);
         py = pgm_read_byte(&CLevel[index++]);
@@ -159,6 +157,7 @@ void NextLevelLoad(){
 
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
+    Objects[i].UPPos(playerobj.x,playerobj.y);
     if (Objects[i].IsActive()) {
       if (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,playerobj.x-4,playerobj.y-4)){
           switch(Objects[i].GetType()){
@@ -175,7 +174,6 @@ void UpdateObjects(){
             
             }
       } else {
-        Objects[i].UPPos(playerobj.x,playerobj.y);
         Objects[i].SpriteAI();
         }
       }
@@ -211,10 +209,12 @@ void DisplayObjects() {
 
 void Death(){
   sprites.drawOverwrite(CENTERX-7,CENTERY-7,Flowers,0);
+  ard.setCursor(CENTERX-7,CENTERY+10);
   ard.print(F("SCORED:"));
-  ard.println(POINTS);
+  ard.print(POINTS);
+  ard.setCursor(CENTERX-7,CENTERY+18);
   ard.print(F("GotToLevel:"));
-  ard.println(Level);
+  ard.print(Level);
   if (ard.justPressed(A_BUTTON)||ard.justPressed(B_BUTTON)){gameState = GameState::MainMenu; Level = 0; POINTS = 0;}
   }
 
@@ -234,7 +234,7 @@ void MapEnding(){
     ard.print(F("Total Points:"));
     ard.println(POINTS+kadd+padd);
     
-    if (ard.everyXFrames(120)) {
+    if (ard.everyXFrames(240)) {
         gameState = GameState::LoadMap;
         POINTS += padd + kadd;
     }
@@ -245,11 +245,11 @@ void DrawHud(){
   ard.setCursor(0,0);
   ard.print(F("L:"));
   ard.print(Level);
-  ard.print(F("C:"));
+  ard.print(F(" C:"));
   ard.print(playerobj.Coins);
-  ard.print(F("K:"));
+  ard.print(F(" K:"));
   ard.print(playerobj.Keys);
-  ard.print(F("H:"));
+  ard.print(F(" H:"));
   ard.print(playerobj.H);
   }
 
