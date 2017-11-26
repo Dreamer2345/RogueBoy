@@ -78,6 +78,7 @@ void UpdateMainMenu(){
 
 void TitleText(){
   if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
+  else {
   byte ofs = 0;
   if (!Audio) {
       if (showarrow > 168){ofs = 42;}
@@ -96,6 +97,7 @@ void TitleText(){
       if (ard.everyXFrames(5)) { showarrow++; }
       if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
   }
+ }
 }
 
 
