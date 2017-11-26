@@ -254,6 +254,9 @@ byte Level;
 const uint8_t * Maps[] = {TEST_MAP, MAP_1, MAP_2 ,MAP_3,MAP_4};
 uint8_t Map[MAP_SIZE];
 
+
+int GetDist(int x,int y,int x1,int y1){return (abs(x-x1)+abs(y-y1));}
+
 int GetTileX(int x)
 {
 	if(x < 0)
