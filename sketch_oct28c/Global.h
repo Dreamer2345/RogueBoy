@@ -2,7 +2,7 @@
 #include "Bitmaps.h"
 #include "Maps.h"
 
-byte showarrow;
+uint8_t showarrow;
 
 
 
