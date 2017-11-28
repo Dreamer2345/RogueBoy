@@ -313,9 +313,10 @@ bool Walkable(int x, int y) {
   p[1] = (GetBlock(GetTileX(x+4), GetTileY(y-4)));
   p[2] = (GetBlock(GetTileX(x-4), GetTileY(y+4)));
   p[3] = (GetBlock(GetTileX(x+4), GetTileY(y+4)));
-  for (byte i=0; i<4;i++){
-    if (!((p[i] == OPEN_DOOR)&&(p[i] == UP_STAIRS)&&(p[i] == DOWN_STAIRS)&&(p[i] == EMPTY)&&(p[i] == OPEN_CHEST)&&(p[i] == RUBBLE))){
+  for (byte i=0; i<3;i++){
+    if (!((p[i] == OPEN_DOOR)||(p[i] == UP_STAIRS)||(p[i] == DOWN_STAIRS)||(p[i] == EMPTY)||(p[i] == OPEN_CHEST)||(p[i] == RUBBLE))){
       	Walk = false;
+        break;
       }
   }
   return Walk;
