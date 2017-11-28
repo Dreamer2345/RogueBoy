@@ -123,8 +123,8 @@ void LoadMAP(byte L){
     
     for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
-        px = (pgm_read_byte(&CLevel[index++])*16)+4;
-        py = (pgm_read_byte(&CLevel[index++])*16)+4;
+        px = (pgm_read_byte(&CLevel[index++])*16)+8;
+        py = (pgm_read_byte(&CLevel[index++])*16)+8;
         H = pgm_read_byte(&CLevel[index++]);
         switch (ID){
           case 1: Offs=12; break; //Coin
