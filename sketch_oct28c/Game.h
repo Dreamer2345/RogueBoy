@@ -103,8 +103,8 @@ void TitleText(){
 
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
-    int px = (pgm_read_byte(&CLevel[2])*16)+4;
-    int py = (pgm_read_byte(&CLevel[3])*16)+4;
+    int px = (pgm_read_byte(&CLevel[2])*16)+8;
+    int py = (pgm_read_byte(&CLevel[3])*16)+8;
     uint8_t index = OFFSET+MAP_SIZE;
     Init(px,py);
     memcpy_P(&Map[0], &CLevel[OFFSET], MAP_SIZE);
