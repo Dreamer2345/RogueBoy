@@ -97,7 +97,7 @@ const uint8_t PROGMEM TEST_MAP[] = {
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-  8, 8, 8, 8, 8, 0, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
@@ -112,10 +112,10 @@ const uint8_t PROGMEM TEST_MAP[] = {
   2, 5, 3, 1,
   3, 5, 4, 1,
   4, 5, 5, 1,
-  5, 5, 6, 1,
-  6, 5, 7, 1,
-  7, 5, 8, 1,
-  8, 5, 9, 1,
+  5, 6, 2, 1,
+  6, 6, 3, 1,
+  7, 6, 4, 1,
+  8, 6, 5, 1,
   //Number of Oparators
   3,
   //Oparator (Switch locations/active points)
@@ -313,7 +313,7 @@ bool Walkable(int x, int y) {
   p[1] = (GetBlock(GetTileX(x+4), GetTileY(y-4)));
   p[2] = (GetBlock(GetTileX(x-4), GetTileY(y+4)));
   p[3] = (GetBlock(GetTileX(x+4), GetTileY(y+4)));
-  for (byte i=0; i<3;i++){
+  for (byte i=0; i<4;i++){
     if (!((p[i] == OPEN_DOOR)||(p[i] == UP_STAIRS)||(p[i] == DOWN_STAIRS)||(p[i] == EMPTY)||(p[i] == OPEN_CHEST)||(p[i] == RUBBLE))){
       	Walk = false;
         break;
