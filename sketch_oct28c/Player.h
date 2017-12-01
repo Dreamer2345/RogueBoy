@@ -15,6 +15,7 @@ class PlayerClass {
   byte H;
   byte Keys;
   byte Coins;
+  byte Kill;
   bool Moving;
   uint8_t Frame;
   void PlayerMovement();
@@ -46,10 +47,10 @@ void BulletClass::Update(){
   unsigned rx = x;
   unsigned ry = y;
   switch(d){
-    case 0: ry-=2; break;
-    case 1: ry+=2; break;
-    case 2: rx+=2; break;
-    case 3: rx-=2; break;
+    case 0: ry-=3; break;
+    case 1: ry+=3; break;
+    case 2: rx+=3; break;
+    case 3: rx-=3; break;
     };
   if (Walkable(rx,ry)) {
     x = rx;
@@ -71,24 +72,32 @@ BulletClass Bullet[3];
 
 void PlayerClass::PlayerMovement() {
   Moving = false;
-  if (ard.pressed(UP_BUTTON) && Walkable(x,y-1)){
-    y--;
-    Moving = true;
+  if (ard.pressed(UP_BUTTON)){
+    if (Walkable(x,y-2)){
+      y-=2;
+      Moving = true;
+    }
     d = 0;
     }
-  if (ard.pressed(DOWN_BUTTON) && Walkable(x,y+1)){
-    y++;
-    Moving = true;
+  if (ard.pressed(DOWN_BUTTON)){
+    if (Walkable(x,y+2)){
+      y+=2;
+      Moving = true;
+    }
     d = 1;
     }
-  if (ard.pressed(RIGHT_BUTTON) && Walkable(x+1,y)){
-    x++;
-    Moving = true;
+  if (ard.pressed(RIGHT_BUTTON)){
+    if (Walkable(x+2,y)){
+      x+=2;
+      Moving = true;
+    }
     d = 2;
     }
-  if (ard.pressed(LEFT_BUTTON)&& Walkable(x-1,y)){
-    x--;
-    Moving = true;
+  if (ard.pressed(LEFT_BUTTON)){
+    if (Walkable(x-2,y)){
+      x-=2;
+      Moving = true;
+    }
     d = 3;
     }   
     

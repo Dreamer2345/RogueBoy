@@ -2,7 +2,7 @@
 Arduboy2 ard;
 Sprites sprites;
 int POINTS = 0;
-bool Audio = true;
+bool Audio = false;
 #include "Global.h"
 #include "Game.h"
 

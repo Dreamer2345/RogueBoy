@@ -40,15 +40,15 @@ void SpriteClass::SpriteAI(){
     case 6:            
     case 7:     
     case 8:   
-            if (GetDist(x,y,relx,rely) < 15){
+            if (GetDist(x,y,relx,rely) < 50){
             if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
-            if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
+            if ((y < rely)&&(Walkable(x,y+1))) {y++;} else {if ((y > rely)&&(Walkable(x,y-1))) {y--;}}
             }
             break;
     case 9: 
-            if (GetDist(x,y,relx,rely) < 15){
+            if (GetDist(x,y,relx,rely) < 50){
             if ((x < relx)&&(Walkable(x+1,y))) {x++;} else {if ((x > relx)&&(Walkable(x-1,y))) {x--;}}
-            if ((y < relx)&&(Walkable(x,y+1))) {y++;} else {if ((y > relx)&&(Walkable(x,y-1))) {y--;}}
+            if ((y < rely)&&(Walkable(x,y+1))) {y++;} else {if ((y > rely)&&(Walkable(x,y-1))) {y--;}}
             if (ard.everyXFrames(24)) { ++Frame; Frame %= 2; } 
             }
             break;

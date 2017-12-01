@@ -14,6 +14,7 @@ void Init(int x,int y){
   playerobj.d = 0;
   playerobj.Coins = 0;
   playerobj.Keys = 0;
+  playerobj.Kill = 0;
   playerobj.H = 100;
 }
 
@@ -51,7 +52,7 @@ void DisplayPlayer(){
   }
   else
   {
-    if(ard.everyXFrames(15))
+    if(ard.everyXFrames(5))
     {
       ++playerobj.Frame;
       playerobj.Frame %= 4;
@@ -78,7 +79,6 @@ void UpdateMainMenu(){
 
 void TitleText(){
   if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
-  else {
   byte ofs = 0;
   if (!Audio) {
       if (showarrow > 168){ofs = 42;}
@@ -86,7 +86,7 @@ void TitleText(){
       for(uint8_t i = ofs; i < showarrow; i++) {
           ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       }
-      if (ard.everyXFrames(15)) {showarrow++;}
+      if (ard.everyXFrames(5)) {showarrow++;}
       if (showarrow > 192){Audio = true; showarrow = 0;}
   }
   else {
@@ -97,13 +97,11 @@ void TitleText(){
       showarrow++;
       if (showarrow >= 64){Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
   }
- }
 }
 
 
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
-	
     int px = (pgm_read_byte(&CLevel[2])*16)+8;
     int py = (pgm_read_byte(&CLevel[3])*16)+8;
     uint8_t index = OFFSET+MAP_SIZE;
@@ -169,10 +167,10 @@ void UpdateObjects(){
             case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
             case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
 
-            case 6: if (ard.everyXFrames(60)) {playerobj.H -= 10*Diff;} break;
-            case 7: if (ard.everyXFrames(60)) {playerobj.H -= 5*Diff;} break;
-            case 8: if (ard.everyXFrames(60)) {playerobj.H -= 2*Diff;} break;
-            case 9: if (ard.everyXFrames(60)) {playerobj.H -= 1*Diff;} break;
+            case 6: if (ard.everyXFrames(5)) {playerobj.H -= 10*Diff;} break;
+            case 7: if (ard.everyXFrames(5)) {playerobj.H -= 5*Diff;} break;
+            case 8: if (ard.everyXFrames(5)) {playerobj.H -= 2*Diff;} break;
+            case 9: if (ard.everyXFrames(5)) {playerobj.H -= 1*Diff;} break;
 
             
             }
@@ -192,6 +190,9 @@ void UpdateObjects(){
         if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,Bullet[j].GetX()-4,Bullet[j].GetY()-4))){
           Objects[i].Damage();
           Bullet[j].Kill();
+          if (!Objects[i].IsActive()){
+            playerobj.Kill++;
+            }
         }
       }
     }
@@ -212,34 +213,36 @@ void DisplayObjects() {
 
 void Death(){
   sprites.drawOverwrite(CENTERX-7,CENTERY-7,Flowers,0);
-  ard.setCursor(CENTERX-7,CENTERY+10);
+  ard.setCursor(0,0);
   ard.print(F("SCORED:"));
-  ard.print(POINTS);
-  ard.setCursor(CENTERX-7,CENTERY+18);
+  ard.println(POINTS);
   ard.print(F("GotToLevel:"));
-  ard.print(Level);
+  ard.println(Level);
   if (ard.justPressed(A_BUTTON)||ard.justPressed(B_BUTTON)){gameState = GameState::MainMenu; Level = 0; POINTS = 0;}
   }
 
 void MapEnding(){
     int padd = playerobj.Coins * 5;    
     int kadd = playerobj.Keys * 10;
+    int killp = playerobj.Kill * 15;
     ard.setCursor(0,0);
     ard.print(F("Level:"));
     ard.println(Level);
+    ard.print(F("Kills:"));
+    ard.println(playerobj.Kill);
     ard.print(F("Coins:"));
     ard.println(playerobj.Coins);
     ard.print(F("Keys:"));
     ard.println(playerobj.Keys);
     ard.print(F("Level Points:"));
-    ard.println(kadd+padd);
+    ard.println(kadd+padd+killp);
     
     ard.print(F("Total Points:"));
     ard.println(POINTS+kadd+padd);
     
-    if (ard.everyXFrames(240)) {
+    if ((ard.everyXFrames(240)) || (ard.justPressed(A_BUTTON))) {
         gameState = GameState::LoadMap;
-        POINTS += padd + kadd;
+        POINTS += padd + kadd + killp;
     }
 }
 
