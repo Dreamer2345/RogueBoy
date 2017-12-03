@@ -79,15 +79,22 @@ void UpdateMainMenu(){
 
 void TitleText(){
   if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
-  byte ofs = 0;
   if (!Audio) {
-      if (showarrow > 168){ofs = 42;}
       ard.setCursor(0, 0);
-      for(uint8_t i = ofs; i < showarrow; i++) {
+      for(uint8_t i = 0; i < 192; i++) {
+          ard.pollButtons();
+          if (ard.justPressed(A_BUTTON)) {break;}
+          
           ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+          ard.display();
+          delay(1000);
+          if ((showarrow == 0)&&(i > 168)){
+            showarrow = 1;
+            ard.clear();
+          }
       }
-      if (ard.everyXFrames(5)) {showarrow++;}
-      if (showarrow > 192){Audio = true; showarrow = 0;}
+      Audio = true; 
+      showarrow = 0;
   }
   else {
       for(uint8_t i = 48; i < 192; i++) {
@@ -160,7 +167,18 @@ void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     Objects[i].UPPos(playerobj.x,playerobj.y);
     if (Objects[i].IsActive()) {
-      if (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,playerobj.x-4,playerobj.y-4)){
+      bool Updatable = true;
+      for (byte j=0;j<i;j++){
+        if ((i != j)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[i].GetType() >= 6)){
+          Updatable = false;
+        }
+      }
+
+      if (Updatable){
+        Objects[i].SpriteAI();
+      }
+      
+      if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
@@ -174,9 +192,7 @@ void UpdateObjects(){
 
             
             }
-      } else {
-        Objects[i].SpriteAI();
-        }
+         }
       }
   }
   for (byte j=0;j<3;j++){

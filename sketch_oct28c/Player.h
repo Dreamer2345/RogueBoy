@@ -12,7 +12,7 @@ class PlayerClass {
   unsigned x;
   unsigned y;
   byte d;
-  byte H;
+  char H;
   byte Keys;
   byte Coins;
   byte Kill;
