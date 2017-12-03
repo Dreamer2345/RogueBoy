@@ -170,9 +170,9 @@ void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
     Objects[i].UPPos(playerobj.x,playerobj.y);
     if (Objects[i].IsActive()) {
-      bool Updatable = true;
-      for (byte j=0;j<i;j++){
-        if ((i != j)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)&&(Objects[j].IsActive())){
+      bool Updatable = true; 
+      for (byte j=0;j<ONum;j++){
+        if ((j < i)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)&&(Objects[j].IsActive())){
           Updatable = false;
         }
       }
@@ -188,10 +188,10 @@ void UpdateObjects(){
             case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
             case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
 
-            case 6: if (ard.everyXFrames(5)) {playerobj.H -= 10*Diff;} break;
-            case 7: if (ard.everyXFrames(5)) {playerobj.H -= 5*Diff;} break;
-            case 8: if (ard.everyXFrames(5)) {playerobj.H -= 2*Diff;} break;
-            case 9: if (ard.everyXFrames(5)) {playerobj.H -= 1*Diff;} break;
+            case 6: if (ard.everyXFrames(15)) {playerobj.H -= 10*Diff;} break;
+            case 7: if (ard.everyXFrames(15)) {playerobj.H -= 5*Diff;} break;
+            case 8: if (ard.everyXFrames(15)) {playerobj.H -= 2*Diff;} break;
+            case 9: if (ard.everyXFrames(15)) {playerobj.H -= 1*Diff;} break;
 
             
             }
@@ -275,7 +275,7 @@ void DrawHud(){
   ard.print(F(" K:"));
   ard.print(playerobj.Keys);
   ard.print(F(" H:"));
-  ard.print(playerobj.H);
+  ard.print((uint8_t)playerobj.H);
   }
 
 
