@@ -1,5 +1,5 @@
 # ROUGEBOY
-Graphics testing for [WIP]ROUGEBOY for the Arduboy.
+Graphics and Engine testing for [WIP]ROUGEBOY for the Arduboy.
 
 -D-PAD = Move player
 
@@ -13,5 +13,5 @@ Graphics testing for [WIP]ROUGEBOY for the Arduboy.
 
 
 TO DO:
-* ReDo Game over screen
 * Music Possibly?
+* More Levels
