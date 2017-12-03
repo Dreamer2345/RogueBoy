@@ -85,17 +85,18 @@ void TitleText(){
       while(i < 192){
           if(ard.nextFrame()){
             ard.pollButtons();
-            if (ard.justPressed(A_BUTTON)) {break;}
-            
+
+            if (ard.everyXFrames(30)){i++;
             ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+            }
+
             ard.display();
-  
             
+            if (ard.justPressed(A_BUTTON)) {break;}            
             if ((showarrow == 0)&&(i > 168)){
               showarrow = 1;
               ard.clear();
             }
-            if (ard.everyXFrames(30)){i++;}
           }
       }
       Audio = true; 
