@@ -86,8 +86,9 @@ void TitleText(){
           if(ard.nextFrame()){
             ard.pollButtons();
 
-            if (ard.everyXFrames(30)){i++;
+            if (ard.everyXFrames(10)){
             ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+            i++;
             }
 
             ard.display();
