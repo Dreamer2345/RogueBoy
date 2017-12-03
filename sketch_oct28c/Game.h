@@ -82,7 +82,7 @@ void TitleText(){
   if (!Audio) {
       ard.setCursor(0, 0);
       uint8_t i = 0;
-      while(i < 192){
+      while(i < 146){
           if(ard.nextFrame()){
             ard.pollButtons();
 
@@ -93,18 +93,14 @@ void TitleText(){
 
             ard.display();
             
-            if (ard.justPressed(A_BUTTON)) {break;}            
-            if ((showarrow == 0)&&(i > 168)){
-              showarrow = 1;
-              ard.clear();
-            }
+            if (ard.justPressed(A_BUTTON)) {break;}
           }
       }
       Audio = true; 
       showarrow = 0;
   }
   else {
-      for(uint8_t i = 42; i < 192; i++) {
+      for(uint8_t i = 0; i < 146; i++) {
           ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       }
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
