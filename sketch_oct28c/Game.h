@@ -172,7 +172,7 @@ void UpdateObjects(){
     if (Objects[i].IsActive()) {
       bool Updatable = true;
       for (byte j=0;j<i;j++){
-        if ((i != j)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[i].GetType() >= 6)){
+        if ((i != j)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)&&(Objects[j].IsActive())){
           Updatable = false;
         }
       }
