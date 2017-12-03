@@ -81,23 +81,28 @@ void TitleText(){
   if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
   if (!Audio) {
       ard.setCursor(0, 0);
-      for(uint8_t i = 0; i < 192; i++) {
-          ard.pollButtons();
-          if (ard.justPressed(A_BUTTON)) {break;}
-          
-          ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
-          ard.display();
-          delay(1000);
-          if ((showarrow == 0)&&(i > 168)){
-            showarrow = 1;
-            ard.clear();
+      uint8_t i = 0;
+      while(i < 192){
+          if(ard.nextFrame()){
+            ard.pollButtons();
+            if (ard.justPressed(A_BUTTON)) {break;}
+            
+            ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+            ard.display();
+  
+            
+            if ((showarrow == 0)&&(i > 168)){
+              showarrow = 1;
+              ard.clear();
+            }
+            if (ard.everyXFrames(30)){i++;}
           }
       }
       Audio = true; 
       showarrow = 0;
   }
   else {
-      for(uint8_t i = 48; i < 192; i++) {
+      for(uint8_t i = 42; i < 192; i++) {
           ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       }
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
