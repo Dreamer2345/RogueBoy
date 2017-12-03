@@ -15,3 +15,4 @@ Graphics and Engine testing for [WIP]ROUGEBOY for the Arduboy.
 TO DO:
 * Music Possibly?
 * More Levels
+* Implement a use for Potions
