@@ -82,7 +82,7 @@ void TitleText(){
   if (!Audio) {
       ard.setCursor(0, 0);
       uint8_t i = 0;
-      while(i < 146){
+      while(i < 151){
           if(ard.nextFrame()){
             ard.pollButtons();
 
@@ -100,7 +100,7 @@ void TitleText(){
       showarrow = 0;
   }
   else {
-      for(uint8_t i = 0; i < 146; i++) {
+      for(uint8_t i = 0; i < 151; i++) {
           ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
       }
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
