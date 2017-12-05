@@ -1,5 +1,5 @@
 #pragma once
-#define MAXLEVEL 4
+#define MAXLEVEL 10
 #define MAXOBJECT 15
 #define MAXENVIROMENT 15
 #define CENTERX 63
@@ -125,38 +125,30 @@ const uint8_t PROGMEM TEST_MAP[] = {
   9,7,9,4,
 };
 
-const uint8_t PROGMEM MAP_4[] = {
-  //Map Dimentions (unused)
-  MAP_HEIGHT, MAP_WIDTH,
-  //PLAYER STARTING POSITION
-  0, 0,
-  //MAP DATA
-  1, 1, 1, 8, 1, 1, 1, 8, 1, 1,
-  8, 8, 1, 8, 1, 8, 1, 8, 1, 8,
-  1, 1, 1, 1, 1, 8, 1, 1, 1, 1,
-  1, 8, 1, 8, 1, 8, 1, 8, 1, 8,
-  1, 8, 1, 8, 1, 8, 8, 8, 1, 1,
-  8, 8, 1, 8, 1, 8, 1, 8, 1, 8,
-  1, 1, 1, 8, 1, 1, 1, 1, 1, 1,
-  1, 8, 8, 8, 8, 8, 8, 8, 1, 8,
-  1, 1, 1, 2, 3, 8, 0, 1, 1, 1,
-  1, 8, 8, 8, 8, 8, 8, 8, 1, 8,
-  //Number of Objects
-  0,
-  //Objects
-  //<ID><xpos><ypos><Health>
-  //Number of Oparators
-  1,
-  //Oparator (Switch locations/active points)
-  //<xpos of switch><ypos of switch><x active><y active>
-  6,8,3,8,
+const uint8_t PROGMEM MAP_3[] = {
+10,10,
+3,0,
+8,8,8,9,8,8,8,1,1,1,
+8,8,8,11,8,8,8,1,1,1,
+8,8,8,8,8,8,8,1,1,1,
+1,1,15,1,6,1,1,1,1,1,
+1,1,8,1,8,1,1,1,1,1,
+1,1,0,1,17,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+0,
+2,
+3,1,2,3,
+3,1,4,3,
 };
 
 
-const uint8_t PROGMEM MAP_3[] = {
+const uint8_t PROGMEM MAP_4[] = {
 10,10,
 4,0,
-4,4,8,8,8,4,8,4,4,1,
+4,4,8,8,9,4,8,4,4,1,
 4,8,8,8,11,8,8,8,4,1,
 8,8,4,8,8,8,4,8,8,1,
 1,16,1,15,1,15,1,15,1,1,
@@ -167,7 +159,7 @@ const uint8_t PROGMEM MAP_3[] = {
 1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,
 1,
-8,3,5,100,
+8,3,5,1,
 4,
 4,1,3,3,
 7,6,5,3,
