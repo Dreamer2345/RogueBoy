@@ -4,6 +4,7 @@
 
 #include "Maps.h"
 
+
 enum class GameState { MainMenu, Settings, Game ,LoadMap ,GameOver, MapEnding, TextTitle, Dead};
 GameState gameState = GameState::TextTitle;
 
@@ -56,7 +57,17 @@ void BulletClass::Update(){
     x = rx;
     y = ry;
     }
-  else {Active = false;}
+  else {
+    switch(d){
+    case 0: ry-=5; break;
+    case 1: ry+=5; break;
+    case 2: rx+=5; break;
+    case 3: rx-=5; break;
+    };
+    
+    if (GetBlock(GetTileX(rx),GetTileY(ry))==4){BarrelBreak(GetTileX(rx),GetTileY(ry));} 
+    Active = false;
+    }
 }
 
 void BulletClass::Display(){
@@ -65,7 +76,7 @@ void BulletClass::Display(){
   sprites.drawExternalMask((CENTERX-4)-_x,(CENTERY-4)-_y,SpriteEnviroment,SpriteMask,(18+d),(18+d));
 }
 
-BulletClass Bullet[3];
+BulletClass Bullet[6];
 
 
 
@@ -107,9 +118,10 @@ void PlayerClass::PlayerMovement() {
   }
 
   if (ard.justPressed(B_BUTTON)){
-    for (byte i=0;i<3;i++){
+    for (byte i=0;i<6;i++){
       if (Bullet[i].GetActive() == false){
         Bullet[i].SetBullet(x,y,d);
+        sound.tone(NOTE_F2H,50);
         break;
       }
     }
@@ -121,6 +133,8 @@ void PlayerClass::PlayerMovement() {
     int rely = GetTileY(y);
     uint8_t bl = GetBlock(relx,rely);
     if (bl == DOWN_STAIRS){
+      sound.noTone();
+      sound.tone(NOTE_C3,100,NOTE_E3,100,NOTE_G3,100);
       gameState = GameState::MapEnding;
     } 
     else 
@@ -133,11 +147,11 @@ void PlayerClass::PlayerMovement() {
           }
         bl = GetBlock(relx,rely);
         switch(bl){
-          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); UpdateEBlock(relx,rely); break;
-          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); UpdateEBlock(relx,rely); break;
-          case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); Keys++; break;
-          case LOCKED_DOOR: if (Keys > 0) {SetBlock(relx,rely,OPEN_DOOR); Keys--;} break;
-          case LOCKED_STAIRS: if (Keys > 0) {SetBlock(relx,rely,DOWN_STAIRS); Keys--;} break;
+          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); UpdateEBlock(relx,rely); sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50); break;
+          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); UpdateEBlock(relx,rely); sound.noTone(); sound.tone(NOTE_D5,50,NOTE_E3,50); break;
+          case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); Keys++; sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50); break;
+          case LOCKED_DOOR: if (Keys > 0) {SetBlock(relx,rely,OPEN_DOOR); Keys--; sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50);} else {sound.noTone(); sound.tone(NOTE_D2,150,NOTE_E2,50);}  break;
+          case LOCKED_STAIRS: if (Keys > 0) {SetBlock(relx,rely,DOWN_STAIRS); Keys--; sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50);} else {sound.noTone(); sound.tone(NOTE_D2,150,NOTE_E2,50);} break;
         }
     }
   

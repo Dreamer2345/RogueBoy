@@ -31,12 +31,12 @@ class SpriteClass{
 
 void SpriteClass::Damage(){
   H -= 10;
-  if (H <= 0){Active = false;}  
+  if (H <= 0){Active = false; sound.tone(NOTE_E5,50);}  
   }
   
 void SpriteClass::SpriteAI(){
   switch(type){
-    case 1: if (ard.everyXFrames(24)) { ++Frame; Frame %= 6; } break;
+    case 1: if (ard.everyXFrames(5)) { ++Frame; Frame %= 6; } break;
     case 6:            
     case 7:     
     case 8:   
@@ -54,7 +54,7 @@ void SpriteClass::SpriteAI(){
             if ((y < rely)&&(Walkable(x,y+1))) {y++;}
             if ((y > rely)&&(Walkable(x,y-1))) {y--;}
             }
-            if (ard.everyXFrames(24)) { ++Frame; Frame %= 2; } 
+            if (ard.everyXFrames(5)) { ++Frame; Frame %= 2; } 
             break;
   }
 }

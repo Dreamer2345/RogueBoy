@@ -1,6 +1,9 @@
 #include <Arduboy2.h>
+#include <ArduboyTones.h>
 Arduboy2 ard;
 Sprites sprites;
+ArduboyTones sound(ard.audio.enabled);
+
 int POINTS = 0;
 bool Audio = false;
 #include "Global.h"
@@ -13,8 +16,11 @@ bool Audio = false;
 void setup() {
   ard.begin();
   ard.clear();
+  ard.setFrameRate(30);
+  ard.initRandomSeed();
   ard.setTextWrap(true);
   Level = 0;
+  
 }
 
 
@@ -35,6 +41,5 @@ void loop() {
     case GameState::MapEnding: MapEnding(); break;
     case GameState::Dead: Death(); break;
   }
-
   ard.display();
 }

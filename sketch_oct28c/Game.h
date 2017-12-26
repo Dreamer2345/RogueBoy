@@ -1,3 +1,5 @@
+void BarrelBreak(uint8_t x,uint8_t y);
+
 #include "Player.h"
 #include "Sprites.h"
 
@@ -6,9 +8,72 @@ SpriteClass Objects[MAXOBJECT];
 
 byte ONum = 0;
 byte Diff = 1;
+byte Timer = 255;
 
+
+
+
+
+void DropItem(uint8_t x,uint8_t y,bool EnDrop){
+  bool NewSlot = true;
+  uint8_t Found = 0;
+  for (byte i=0;i<ONum;i++){
+    if (!(Objects[i].IsActive())){
+      NewSlot = false;
+      Found = i;
+      break;
+    }
+  }
+  if ((ONum == MAXOBJECT)&&(NewSlot)) return;
+  if (NewSlot){
+    if (ONum < MAXOBJECT){ONum++;}
+    uint8_t ID = random(1,5);
+    uint8_t Offs = 0;
+    if (ID!=4){
+      switch (ID){
+          case 1: Offs=12; break; //Coin
+          case 2: Offs=8; break; //Potion
+          case 3: Offs=9; break; //Jelly Filled Doughnut
+          case 4: Offs=10; break; //Key
+          case 5: Offs=11; break; //Ham
+        }
+      if (!EnDrop){
+      Objects[ONum-1].setSprite((x*16)+8,(y*16)+8,1,ID,Offs,true);
+      }else{
+      Objects[ONum-1].setSprite(x,y,1,ID,Offs,true);
+      }
+      Objects[ONum-1].UPPos(playerobj.x,playerobj.y);
+    }
+  } else {
+    uint8_t ID = random(1,5);
+    uint8_t Offs = 0;
+    if (ID!=4){
+      switch (ID){
+          case 1: Offs=12; break; //Coin
+          case 2: Offs=8; break; //Potion
+          case 3: Offs=9; break; //Jelly Filled Doughnut
+          case 4: Offs=10; break; //Key
+          case 5: Offs=11; break; //Ham
+        }
+      if (!EnDrop){
+      Objects[Found].setSprite((x*16)+8,(y*16)+8,1,ID,Offs,true);
+      }else{
+      Objects[Found].setSprite(x,y,1,ID,Offs,true);
+      }
+      Objects[Found].UPPos(playerobj.x,playerobj.y);
+    }
+  }
+}
+
+
+void BarrelBreak(uint8_t x,uint8_t y){
+  SetBlock(x,y,18);
+  DropItem(x,y,false);
+}
 
 void Init(int x,int y){
+  sound.noTone();
+  sound.tone(NOTE_C7H,150, NOTE_REST,100, NOTE_C6,150);
   playerobj.x = x;
   playerobj.y = y;
   playerobj.d = 0;
@@ -16,6 +81,10 @@ void Init(int x,int y){
   playerobj.Keys = 0;
   playerobj.Kill = 0;
   playerobj.H = 100;
+  for (int i = 0; i < 6; i++){
+  Bullet[i].Kill();
+  }
+  Timer = 255;
 }
 
 bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 > Min1) && (Min0 < Max1));}
@@ -64,12 +133,17 @@ void DisplayPlayer(){
 void UpdateMainMenu(){
   sprites.drawSelfMasked(0,0,Logo,0);
   if (showarrow){sprites.drawOverwrite(20,55,Arrow,0);}
-  //if (Audio){sprites.drawOverwrite(1,1,Speaker,1);} else {sprites.drawOverwrite(1,1,Speaker,0);}
+  if (Audio){sprites.drawOverwrite(1,1,Speaker,1);} else {sprites.drawOverwrite(1,1,Speaker,0);}
   if (ard.justPressed(A_BUTTON)){
     gameState = GameState::LoadMap;
   }
   if (ard.justPressed(B_BUTTON)){
     Audio = !Audio;
+    ard.audio.on();
+    sound.noTone();
+    sound.tone(NOTE_C4,50);
+    ard.audio.off();
+    if (Audio){ard.audio.on();}else{ard.audio.off();}
   }
   if (ard.everyXFrames(30)) {
       showarrow = !showarrow;
@@ -78,7 +152,7 @@ void UpdateMainMenu(){
 
 
 void TitleText(){
-  if (ard.justPressed(A_BUTTON)) { Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
+  if (ard.justPressed(A_BUTTON)) {sound.tone(NOTE_C4,500); Audio = true; showarrow = 0; gameState = GameState::MainMenu; }
   if (!Audio) {
       ard.setCursor(0, 0);
       uint8_t i = 0;
@@ -86,8 +160,13 @@ void TitleText(){
           if(ard.nextFrame()){
             ard.pollButtons();
 
-            if (ard.everyXFrames(10)){
+            if (ard.everyXFrames(5)){
             ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
+            if (pgm_read_byte(&TitleSequenceText[i]) != 32)
+              {
+              sound.noTone();
+              sound.tone(NOTE_C5H,150);
+              }
             i++;
             }
 
@@ -183,34 +262,36 @@ void UpdateObjects(){
       
       if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
           switch(Objects[i].GetType()){
-            case 1: playerobj.Coins++; Objects[i].SetActive(false); break;
-            case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
-            case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); break;
-            case 4: playerobj.Keys++; Objects[i].SetActive(false); break;
+            case 1: playerobj.Coins++; Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C7H,150); break;
+            case 2: playerobj.Coins+=5; Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C7H,150); break;
+            case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); sound.noTone();  sound.tone(NOTE_C3H,150); break;
+            case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C3H,150); break;
+            case 4: playerobj.Keys++; Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C7H,150); break;
 
-            case 6: if (ard.everyXFrames(15)) {playerobj.H -= 10*Diff;} break;
-            case 7: if (ard.everyXFrames(15)) {playerobj.H -= 5*Diff;} break;
-            case 8: if (ard.everyXFrames(15)) {playerobj.H -= 2*Diff;} break;
-            case 9: if (ard.everyXFrames(15)) {playerobj.H -= 1*Diff;} break;
+            case 6: if (ard.everyXFrames(5)) {playerobj.H -= 10*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);}  break;
+            case 7: if (ard.everyXFrames(5)) {playerobj.H -= 5*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
+            case 8: if (ard.everyXFrames(5)) {playerobj.H -= 2*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
+            case 9: if (ard.everyXFrames(5)) {playerobj.H -= 1*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
 
             
             }
          }
       }
   }
-  for (byte j=0;j<3;j++){
+  for (byte j=0;j<6;j++){
     if (Bullet[j].GetActive()){
       Bullet[j].UPPos(playerobj.x,playerobj.y);
       Bullet[j].Update();
     }
   }
     for (byte i=0;i<ONum;i++){
-      for (byte j=0;j<3;j++){
+      for (byte j=0;j<6;j++){
         if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,Bullet[j].GetX()-4,Bullet[j].GetY()-4))){
           Objects[i].Damage();
           Bullet[j].Kill();
           if (!Objects[i].IsActive()){
             playerobj.Kill++;
+            DropItem(Objects[i].GetX(),Objects[i].GetY(),true);
             }
         }
       }
@@ -223,12 +304,14 @@ void DisplayObjects() {
     Objects[i].Display();
     }
   }
-  for (byte i=0;i<3;i++){
+  for (byte i=0;i<6;i++){
     if (Bullet[i].GetActive()){
       Bullet[i].Display();
     }
   }
 }
+
+const uint16_t DeathNotes[] PROGMEM = {NOTE_A3,1000,NOTE_REST,100,NOTE_A3,1000,NOTE_REST,100,NOTE_A3,500,NOTE_REST,100,NOTE_A3,500,NOTE_REST,50,NOTE_C3,1000,NOTE_REST,100,NOTE_B3,500,NOTE_REST,100,NOTE_B3,500,NOTE_REST,100,NOTE_A3,1000,NOTE_REST,100,NOTE_B3,500, TONES_END};
 
 void Death(){
   sprites.drawOverwrite(CENTERX-7,CENTERY-7,Flowers,0);
@@ -253,15 +336,17 @@ void MapEnding(){
     ard.println(playerobj.Coins);
     ard.print(F("Keys:"));
     ard.println(playerobj.Keys);
+    ard.print(F("TimeBonus:"));
+    ard.println((Timer/10));
     ard.print(F("Level Points:"));
-    ard.println(kadd+padd+killp);
+    ard.println(kadd+padd+killp+(Timer/10));
     
     ard.print(F("Total Points:"));
-    ard.println(POINTS+kadd+padd);
+    ard.println(POINTS+kadd+padd+killp+(Timer/10));
     
     if ((ard.everyXFrames(240)) || (ard.justPressed(A_BUTTON))) {
         gameState = GameState::LoadMap;
-        POINTS += padd + kadd + killp;
+        POINTS += padd + kadd + killp + (Timer/10);
     }
 }
 
@@ -275,7 +360,9 @@ void DrawHud(){
   ard.print(F(" K:"));
   ard.print(playerobj.Keys);
   ard.print(F(" H:"));
-  ard.print((uint8_t)playerobj.H);
+  ard.println((uint8_t)playerobj.H);
+  ard.print(F("T:"));
+  ard.print(Timer);
   }
 
 
@@ -286,6 +373,8 @@ void UpdateGame(){
   DisplayPlayer();
   DisplayObjects();
   DrawHud();
-  if (playerobj.H <= 0) {gameState = GameState::Dead;}
+  if (ard.everyXFrames(15)) {Timer--;}
+  if (Timer == 0){playerobj.H = 0;}
+  if (playerobj.H <= 0) {sound.noTone(); sound.tones(DeathNotes); gameState = GameState::Dead;}
 }
 
