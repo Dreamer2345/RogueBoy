@@ -1,5 +1,5 @@
 # ROUGEBOY
-Graphics and Engine testing for [WIP]ROUGEBOY for the Arduboy.
+Graphics and Engine testing for [EarlyRelease]ROUGEBOY for the Arduboy.
 
 -D-PAD = Move player
 
