@@ -1,5 +1,6 @@
 # ROUGEBOY
 Graphics and Engine testing for [EarlyRelease]ROUGEBOY for the Arduboy.
+Version 0.0.1-Alpha.
 
 -D-PAD = Move player
 
