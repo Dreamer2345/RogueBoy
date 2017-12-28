@@ -80,15 +80,18 @@ void Init(int x,int y){
   playerobj.Keys = 0;
   playerobj.Kill = 0;
   playerobj.H = 100;
-  for (int i = 0; i < 6; i++){
+  for (uint8_t i = 0; i < 6; i++){
   Bullet[i].Kill();
+  }
+  for (uint8_t i = 0; i < MAXOBJECT; i++){
+  Objects[i].SetActive(false);
   }
   Timer = 255;
 }
 
-bool Intersect(uint8_t Min0, uint8_t Max0, uint8_t Min1, uint8_t Max1){return ((Max0 > Min1) && (Min0 < Max1));}
+bool Intersect(uint16_t Min0, uint16_t Max0, uint16_t Min1, uint16_t Max1){return ((Max0 > Min1) && (Min0 < Max1));}
 
-bool Collision(uint8_t x, uint8_t y, uint8_t x1, uint8_t y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
+bool Collision(uint16_t x, uint16_t y, uint16_t x1, uint16_t y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
 
 
 

@@ -37,7 +37,7 @@ void SpriteClass::SpriteAI(){
     case 6:            
     case 7:     
     case 8:   
-            if (GetDist(x,y,playerobj.x,playerobj.y) < 5){
+            if (GetDist(x,y,playerobj.x,playerobj.y) <= 5){
             if ((x < playerobj.x)&&(Walkable(x+1,y))) {x++;}
             if ((x > playerobj.x)&&(Walkable(x-1,y))) {x--;}
             if ((y < playerobj.y)&&(Walkable(x,y+1))) {y++;}

@@ -358,9 +358,9 @@ uint8_t GetTileYOffset(uint16_t y)
   return (y % TILE_HEIGHT);
 }
 
-uint8_t GetDist(int x,int y,int x1,int y1){uint8_t ret = (abs(GetTileX(x)-GetTileX(x1))+abs(GetTileY(y)-GetTileY(y1))); return ret;}
+uint16_t GetDist(int x,int y,int x1,int y1){uint16_t ret = (abs(GetTileX(x)-GetTileX(x1))+abs(GetTileY(y)-GetTileY(y1))); return ret;}
 
-uint8_t GetBlock(uint8_t x, uint8_t y) {
+uint8_t GetBlock(uint16_t x, uint16_t y) {
   if ((x >= MAP_WIDTH) || (y >= MAP_HEIGHT)) {
     return BLANK_WALL;
   } else {
