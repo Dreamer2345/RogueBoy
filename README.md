@@ -6,8 +6,6 @@ A Very Big Thanks to @Pharap for helping with this Project.
 
 -D-PAD = Move player
 
--A+B = Main Menu
-
 -A = Interact
 
 -B = Fire!
@@ -18,3 +16,6 @@ A Very Big Thanks to @Pharap for helping with this Project.
 TO DO:
   * Add More Levels
   * Test For Bugs
+  
+BUGS:
+  * Enemys Freezing in place
