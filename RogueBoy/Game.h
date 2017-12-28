@@ -253,17 +253,15 @@ void NextLevelLoad(){
 
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
-    if (Objects[i].IsActive()) {
-      bool Updatable = true; 
+    if (Objects[i].IsActive()) { 
+      bool Ud = true;
       for (byte j=0;j<ONum;j++){
-        if ((j < i)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)){
-          Updatable = false;
+        if ((j < i)&&(Objects[j].IsActive())&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)){
+              Ud = false;
         }
       }
 
-      if (Updatable){
-        Objects[i].SpriteAI();
-      }
+      if (Ud) {Objects[i].SpriteAI();}
       
       if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
           switch(Objects[i].GetType()){
@@ -277,8 +275,6 @@ void UpdateObjects(){
             case 7: if (ard.everyXFrames(5)) {playerobj.H -= 5*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
             case 8: if (ard.everyXFrames(5)) {playerobj.H -= 2*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
             case 9: if (ard.everyXFrames(5)) {playerobj.H -= 1*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
-
-            
             }
          }
       }
