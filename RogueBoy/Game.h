@@ -1,9 +1,8 @@
 void BarrelBreak(uint8_t x,uint8_t y);
 
 #include "Player.h"
-#include "Sprites.h"
 
-PlayerClass playerobj;
+#include "Sprites.h"
 SpriteClass Objects[MAXOBJECT];
 
 byte ONum = 0;
@@ -42,7 +41,6 @@ void DropItem(uint8_t x,uint8_t y,bool EnDrop){
       }else{
       Objects[ONum-1].setSprite(x,y,1,ID,Offs,true);
       }
-      Objects[ONum-1].UPPos(playerobj.x,playerobj.y);
     }
   } else {
     uint8_t ID = random(1,5);
@@ -60,7 +58,6 @@ void DropItem(uint8_t x,uint8_t y,bool EnDrop){
       }else{
       Objects[Found].setSprite(x,y,1,ID,Offs,true);
       }
-      Objects[Found].UPPos(playerobj.x,playerobj.y);
     }
   }
 }
@@ -89,9 +86,9 @@ void Init(int x,int y){
   Timer = 255;
 }
 
-bool Intersect(unsigned Min0, unsigned Max0, unsigned Min1, unsigned Max1){return ((Max0 > Min1) && (Min0 < Max1));}
+bool Intersect(uint8_t Min0, uint8_t Max0, uint8_t Min1, uint8_t Max1){return ((Max0 > Min1) && (Min0 < Max1));}
 
-bool Collision(unsigned x, unsigned y, unsigned x1, unsigned y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
+bool Collision(uint8_t x, uint8_t y, uint8_t x1, uint8_t y1) {return (Intersect(x,x+8,x1,x1+8)&&Intersect(y,y+8,y1,y1+8));}
 
 
 
@@ -253,11 +250,10 @@ void NextLevelLoad(){
 
 void UpdateObjects(){
   for (byte i=0;i<ONum;i++){
-    Objects[i].UPPos(playerobj.x,playerobj.y);
     if (Objects[i].IsActive()) {
       bool Updatable = true; 
       for (byte j=0;j<ONum;j++){
-        if ((j < i)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)&&(Objects[j].IsActive())){
+        if ((j < i)&&(Collision(Objects[i].GetX(),Objects[i].GetY(),Objects[j].GetX(),Objects[j].GetY()))&&(Objects[j].GetType() >= 6)){
           Updatable = false;
         }
       }
@@ -286,7 +282,6 @@ void UpdateObjects(){
   }
   for (byte j=0;j<6;j++){
     if (Bullet[j].GetActive()){
-      Bullet[j].UPPos(playerobj.x,playerobj.y);
       Bullet[j].Update();
     }
   }

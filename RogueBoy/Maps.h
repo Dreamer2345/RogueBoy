@@ -336,7 +336,7 @@ const uint8_t * Maps[] = {MAP_1, MAP_2 ,MAP_3, MAP_4, MAP_5, MAP_6, MAP_7, MAP_8
 uint8_t Map[MAP_SIZE];
 
 
-uint16_t GetDist(uint16_t x,uint16_t y,uint16_t x1,uint16_t y1){return (abs(x-x1)+abs(y-y1));}
+
 
 uint8_t GetTileX(uint16_t x)
 {
@@ -358,12 +358,15 @@ uint8_t GetTileYOffset(uint16_t y)
   return (y % TILE_HEIGHT);
 }
 
+uint8_t GetDist(int x,int y,int x1,int y1){uint8_t ret = (abs(GetTileX(x)-GetTileX(x1))+abs(GetTileY(y)-GetTileY(y1))); return ret;}
+
 uint8_t GetBlock(uint8_t x, uint8_t y) {
   if ((x >= MAP_WIDTH) || (y >= MAP_HEIGHT)) {
     return BLANK_WALL;
+  } else {
+    uint8_t Block = Map[(x + (y * MAP_WIDTH))];
+    return Block;
   }
-  uint8_t Block = Map[(x + (y * MAP_WIDTH))];
-  return Block;
 }
 
 void SetBlock(uint8_t x, uint8_t y, uint8_t bl) {

@@ -6,7 +6,6 @@ class SpriteClass{
     SpriteClass() { };
 
     void setSprite(uint16_t _x,uint16_t _y,byte _H,byte _type,byte _offset,bool _Active){x = _x;y = _y;H = _H;type = _type;Frame = 0;offset=_offset;Active = _Active;};
-    void UPPos(uint16_t _x,uint16_t _y){relx = _x; rely = _y;};
     void SpriteAI();
     void Display();
     void Damage();
@@ -20,8 +19,6 @@ class SpriteClass{
     byte offset;
     uint16_t x;
     uint16_t y;
-    uint16_t relx;
-    uint16_t rely;
     short int H;
     byte type;
     byte Frame;
@@ -40,19 +37,19 @@ void SpriteClass::SpriteAI(){
     case 6:            
     case 7:     
     case 8:   
-            if (GetDist(x,y,relx,rely) < 75){
-            if ((x < relx)&&(Walkable(x+1,y))) {x++;}
-            if ((x > relx)&&(Walkable(x-1,y))) {x--;}
-            if ((y < rely)&&(Walkable(x,y+1))) {y++;}
-            if ((y > rely)&&(Walkable(x,y-1))) {y--;}
+            if (GetDist(x,y,playerobj.x,playerobj.y) < 5){
+            if ((x < playerobj.x)&&(Walkable(x+1,y))) {x++;}
+            if ((x > playerobj.x)&&(Walkable(x-1,y))) {x--;}
+            if ((y < playerobj.y)&&(Walkable(x,y+1))) {y++;}
+            if ((y > playerobj.y)&&(Walkable(x,y-1))) {y--;}
             }
             break;
     case 9: 
-            if (GetDist(x,y,relx,rely) < 75){
-            if ((x < relx)&&(Walkable(x+1,y))) {x++;}
-            if ((x > relx)&&(Walkable(x-1,y))) {x--;}
-            if ((y < rely)&&(Walkable(x,y+1))) {y++;}
-            if ((y > rely)&&(Walkable(x,y-1))) {y--;}
+            if (GetDist(x,y,playerobj.x,playerobj.y) < 5){
+            if ((x < playerobj.x)&&(Walkable(x+1,y))) {x++;}
+            if ((x > playerobj.x)&&(Walkable(x-1,y))) {x--;}
+            if ((y < playerobj.y)&&(Walkable(x,y+1))) {y++;}
+            if ((y > playerobj.y)&&(Walkable(x,y-1))) {y--;}
             }
             if (ard.everyXFrames(5)) { ++Frame; Frame %= 2; } 
             break;
@@ -61,8 +58,8 @@ void SpriteClass::SpriteAI(){
 
 
 void SpriteClass::Display(){
-  int _x = (relx-x);
-  int _y = (rely-y);
+  int _x = (playerobj.x-x);
+  int _y = (playerobj.y-y);
   sprites.drawExternalMask((CENTERX-4)-_x,(CENTERY-4)-_y,SpriteEnviroment,SpriteMask,(Frame+offset),(Frame+offset));
 }
 

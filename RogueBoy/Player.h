@@ -22,6 +22,8 @@ class PlayerClass {
   void PlayerMovement();
 };
 
+PlayerClass playerobj;
+
 class BulletClass{
   public:
   BulletClass(){}  
@@ -30,14 +32,11 @@ class BulletClass{
   bool GetActive() {return Active;}
   byte GetX(){return x;}
   byte GetY(){return y;}
-  void UPPos(int _x,int _y){relx = _x; rely = _y;};
   void Kill(){Active = false;}
-  void SetBullet(unsigned _x,unsigned _y,byte _d){x = _x; y = _y; d = _d; Active = true;}
+  void SetBullet(uint16_t _x,uint16_t _y,byte _d){x = _x; y = _y; d = _d; Active = true;}
   private:
-  unsigned relx;
-  unsigned rely;
-  unsigned x;
-  unsigned y;
+  uint16_t x;
+  uint16_t y;
   byte d;
   bool Active;
 };
@@ -71,8 +70,8 @@ void BulletClass::Update(){
 }
 
 void BulletClass::Display(){
-  int _x = (relx-x);
-  int _y = (rely-y);
+  int _x = (playerobj.x-x);
+  int _y = (playerobj.y-y);
   sprites.drawExternalMask((CENTERX-4)-_x,(CENTERY-4)-_y,SpriteEnviroment,SpriteMask,(18+d),(18+d));
 }
 
