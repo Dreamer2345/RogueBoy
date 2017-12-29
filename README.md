@@ -15,7 +15,4 @@ A Very Big Thanks to @Pharap for helping with this Project.
 
 TO DO:
   * Add More Levels
-  * Test For Bugs
-  
-BUGS:
-  * Enemys Freezing in place
+  * Test For bugs
