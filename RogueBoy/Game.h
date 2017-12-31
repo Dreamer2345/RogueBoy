@@ -28,12 +28,10 @@ void DropItem(uint8_t x,uint8_t y,bool EnDrop){
     if (ONum < MAXOBJECT){ONum++;}
     uint8_t ID = random(1,5);
     uint8_t Offs = 0;
-    if (ID!=4){
+    if ((ID!=4)&&(ID!=2)){
       switch (ID){
           case 1: Offs=12; break; //Coin
-          case 2: Offs=8; break; //Potion
           case 3: Offs=9; break; //Jelly Filled Doughnut
-          case 4: Offs=10; break; //Key
           case 5: Offs=11; break; //Ham
         }
       if (!EnDrop){
@@ -45,12 +43,10 @@ void DropItem(uint8_t x,uint8_t y,bool EnDrop){
   } else {
     uint8_t ID = random(1,5);
     uint8_t Offs = 0;
-    if (ID!=4){
+    if ((ID!=4)&&(ID!=2)){
       switch (ID){
           case 1: Offs=12; break; //Coin
-          case 2: Offs=8; break; //Potion
           case 3: Offs=9; break; //Jelly Filled Doughnut
-          case 4: Offs=10; break; //Key
           case 5: Offs=11; break; //Ham
         }
       if (!EnDrop){

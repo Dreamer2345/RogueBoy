@@ -14,13 +14,18 @@ bool Audio = false;
 
 
 void setup() {
-  ard.begin();
+  ard.boot();
+  ard.flashlight();
+  ard.audio.begin();
   ard.clear();
   ard.setFrameRate(30);
   ard.initRandomSeed();
   ard.setTextWrap(true);
   Level = 0;
-  
+
+  sprites.drawSelfMasked(CENTERX-26,CENTERY-17,MainLogo,0);
+  ard.display();
+  delay(1000);
 }
 
 
