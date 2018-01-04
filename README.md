@@ -1,6 +1,6 @@
 # ROGUEBOY
 Graphics and Engine testing for [EarlyRelease]ROGUEBOY for the Arduboy.
-Version 0.0.1-Alpha.
+Version 0.0.3-Alpha.
 
 A Very Big Thanks to @Pharap for helping with this Project.
 
