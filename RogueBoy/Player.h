@@ -110,6 +110,18 @@ void PlayerClass::PlayerMovement() {
     }
     d = 3;
     }   
+
+  if (Moving) {    int relx = GetTileX(x);
+                   int rely = GetTileY(y);
+                   uint8_t ofx = GetTileXOffset(x);
+                   uint8_t ofy = GetTileYOffset(y);
+                   uint8_t bl = GetBlock(relx,rely);
+                   if (Between(3,3,11,11,ofx,ofy)&&bl == PRESS_PLATE){
+                    SetBlock(relx,rely,RUBBLE);
+                    UpdateEBlock(relx,rely);
+                    sound.noTone(); sound.tone(NOTE_D2,150,NOTE_E2,50);
+                   }
+              }
   /* 
   if (ard.pressed(A_BUTTON+B_BUTTON)){
     gameState = GameState::MainMenu;

@@ -8,12 +8,31 @@ SpriteClass Objects[MAXOBJECT];
 byte ONum = 0;
 byte Diff = 1;
 byte Timer = 255;
+bool GameType = true;
 
 
+void FillRandom(){
+  uint8_t r = 0;
+  for(uint16_t i = 0; i<MAP_SIZE; i++){
+    r = rand() % 2;
+    Map[i] = r;
+  }
+}
 
+uint8_t GetSurround8(uint8_t x,uint8_t y,uint8_t b){
+  uint8_t a = 0;
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x+1,y))&&(GetBlock(x+1,y) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x-1,y))&&(GetBlock(x-1,y) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x,y+1))&&(GetBlock(x,y+1) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x,y-1))&&(GetBlock(x,y-1) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x+1,y+1))&&(GetBlock(x+1,y+1) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x+1,y-1))&&(GetBlock(x+1,y-1) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x-1,y+1))&&(GetBlock(x-1,y+1) == b)) { a++; }
+  if ((Between(0,0,MAP_WIDTH,MAP_HEIGHT,x-1,y-1))&&(GetBlock(x-1,y-1) == b)) { a++; }
+  return a;
+}
 
-
-void DropItem(uint8_t x,uint8_t y,bool EnDrop){
+void DropItem(uint16_t x,uint16_t y,bool EnDrop){
   bool NewSlot = true;
   uint8_t Found = 0;
   for (byte i=0;i<ONum;i++){
@@ -58,15 +77,41 @@ void DropItem(uint8_t x,uint8_t y,bool EnDrop){
   }
 }
 
-
-void BarrelBreak(uint8_t x,uint8_t y){
-  SetBlock(x,y,18);
-  DropItem(x,y,false);
-  sound.noTone();
-  sound.tone(NOTE_C3,50, NOTE_C2,50, NOTE_E3,150);
+Point setRandomBlock(uint8_t rep,uint8_t blk){
+  bool Done = false;
+  Point out;
+  do{    
+  for(uint8_t i = 0; i < MAP_WIDTH; i++)
+      for(uint8_t j = 0; j < MAP_HEIGHT; j++){
+        if ((GetBlock(i,j) == rep)&&(random(0,100)==0)) {
+          SetBlock(i,j,blk);
+          out.x = i;
+          out.y = j;
+          Done = true;
+          return out;
+        }
+      }
+  }while(Done == false);
 }
 
-void Init(int x,int y){
+Point setRandomItem(uint8_t blk){
+  bool Done = false;
+  Point out;
+  do{    
+  for(uint8_t i = 0; i < MAP_WIDTH; i++)
+      for(uint8_t j = 0; j < MAP_HEIGHT; j++){
+        if ((GetBlock(i,j) == 8)&&(random(0,100)==0)) {
+          DropItem(i,j,false);
+          out.x = i;
+          out.y = j;
+          Done = true;
+          return out;
+        }
+      }
+  }while(Done == false);
+}
+
+void Init(uint16_t x,uint16_t y){
   sound.noTone();
   sound.tone(NOTE_C7H,150, NOTE_REST,100, NOTE_C6,150);
   playerobj.x = x;
@@ -83,6 +128,59 @@ void Init(int x,int y){
   Objects[i].SetActive(false);
   }
   Timer = 255;
+}
+/*
+void Flood(bool * Ref,uint8_t x,uint8_t y){
+  if (Between(0,0,MAXX-1,MAXY-1,x,y)){
+    if ((GetShipBlock(x,y) != 0)&&(Ref[(x+(y*MAXX))] == false)){
+      Ref[(x+(y*MAXX))] = true; 
+      Flood(Ref,x+1,y);
+      Flood(Ref,x-1,y);
+      Flood(Ref,x,y-1);
+      Flood(Ref,x,y+1);
+    }
+  }
+}*/
+
+void GenCave(){
+  uint8_t Temp[MAP_SIZE];
+  MAP_HEIGHT = 10;
+  MAP_WIDTH = 10;
+  for(uint8_t i = 0; i < MAP_SIZE; i++) {Temp[i] = 8; Map[i] = 8;}
+  FillRandom();
+  for(uint8_t count = 0; count < 6; count++) {
+    for(uint8_t j = 0; j < MAP_WIDTH; j++)
+      for(uint8_t i = 0; i < MAP_HEIGHT; i++){
+        if(((GetBlock(i,j) == 0)&&(GetSurround8(i,j,0) >= 3))||((GetBlock(i,j) == 1)&&(GetSurround8(i,j,0) >= 5)))
+          Temp[GetOffset(i,j)] = 0;
+        else
+          Temp[GetOffset(i,j)] = 1;
+    }
+    for(uint16_t i = 0; i<MAP_SIZE; i++){ Map[i] = Temp[i]; }
+  }
+  for(uint8_t i = 0; i < MAP_WIDTH; i++)
+      for(uint8_t j = 0; j < MAP_HEIGHT; j++){
+        if (GetBlock(i,j) == 0) {
+          SetBlock(i,j,8);
+        } else {
+          SetBlock(i,j,BARREL);
+        }
+      }
+  setRandomBlock(8,DOWN_STAIRS);
+  Point pl = setRandomBlock(8,UP_STAIRS);
+  Init((pl.x*16)+8,(pl.y*16)+8);
+  for(uint8_t count = 0; count < 6; count++) {
+    setRandomItem(8);
+  }
+  Timer = 50;
+}
+
+
+void BarrelBreak(uint8_t x,uint8_t y){
+  SetBlock(x,y,18);
+  DropItem(x,y,false);
+  sound.noTone();
+  sound.tone(NOTE_C3,50, NOTE_C2,50, NOTE_E3,150);
 }
 
 bool Intersect(uint16_t Min0, uint16_t Max0, uint16_t Min1, uint16_t Max1){return ((Max0 > Min1) && (Min0 < Max1));}
@@ -240,11 +338,18 @@ void LoadMAP(byte L){
 }
 
 void NextLevelLoad(){
-  if (Level < MAXLEVEL){
-    LoadMAP(Level);
-    Level++; 
+  if (GameType) {
+    if (Level < MAXLEVEL){
+      LoadMAP(Level);
+      Level++; 
+      gameState = GameState::Game;
+      GameType = !GameType;
+    } else {gameState = GameState::WinState;}
+  } else {
     gameState = GameState::Game;
-  } else {gameState = GameState::WinState;}
+    GameType = !GameType;
+    GenCave();
+  }
 }
 
 void UpdateObjects(){
@@ -316,11 +421,11 @@ void Death(){
   ard.println(POINTS);
   ard.print(F("GotToLevel:"));
   ard.println(Level);
-  if (ard.justPressed(A_BUTTON)||ard.justPressed(B_BUTTON)){sound.noTone(); gameState = GameState::MainMenu; Level = 0; POINTS = 0;}
+  if (ard.justPressed(A_BUTTON)||ard.justPressed(B_BUTTON)){sound.noTone(); gameState = GameState::MainMenu; Level = 0; POINTS = 0; GameType = true;}
   }
 
 void win(){
-  sprites.drawOverwrite(CENTERX-7,CENTERY-7,Ardu,0);
+  sprites.drawSelfMasked(CENTERX-7,CENTERY-7,Ardu,0);
   ard.setCursor(0,0);
   ard.println(F("WellDone!"));
   ard.print(F("YOU SCORED:"));
@@ -355,19 +460,34 @@ void MapEnding(){
     }
 }
 
+void DrawHealth(){
+  sprites.drawOverwrite(0, 56, HealthBar, 0);
+  float Drawn = (static_cast<float>(playerobj.H) / 100)*42;
+  ard.drawFastHLine(9,59,Drawn,BLACK);
+}
+
+
+void DrawHolding(){
+  sprites.drawExternalMask(98, 43 ,slots,SlotsMask, 0,0);
+  ard.setCursor(108,45);
+  ard.print(playerobj.Keys);
+  ard.setCursor(108,55);
+  ard.print(playerobj.Coins);
+}
+
+void DrawTime(){
+  sprites.drawOverwrite(90, -6 ,TimeSlot,0);
+  ard.setCursor(102,1);
+  ard.print(Timer);
+}
 
 void DrawHud(){
+  DrawHealth();
+  DrawHolding();
+  DrawTime();
   ard.setCursor(0,0);
   ard.print(F("L:"));
   ard.print(Level);
-  ard.print(F(" C:"));
-  ard.print(playerobj.Coins);
-  ard.print(F(" K:"));
-  ard.print(playerobj.Keys);
-  ard.print(F(" H:"));
-  ard.println((uint8_t)playerobj.H);
-  ard.print(F("T:"));
-  ard.print(Timer);
   }
 
 
