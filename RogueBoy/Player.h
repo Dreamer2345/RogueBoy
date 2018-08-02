@@ -119,7 +119,7 @@ void PlayerClass::PlayerMovement() {
                    if (Between(3,3,11,11,ofx,ofy)&&bl == PRESS_PLATE){
                     SetBlock(relx,rely,RUBBLE);
                     UpdateEBlock(relx,rely);
-                    sound.noTone(); sound.tone(NOTE_D2,150,NOTE_E2,50);
+                    sound.tone(NOTE_D2,150,NOTE_E2,50);
                    }
               }
   /* 
@@ -144,7 +144,6 @@ void PlayerClass::PlayerMovement() {
     int rely = GetTileY(y);
     uint8_t bl = GetBlock(relx,rely);
     if (bl == DOWN_STAIRS){
-      sound.noTone();
       sound.tone(NOTE_C3,100,NOTE_E3,100,NOTE_G3,100);
       gameState = GameState::MapEnding;
     } 
@@ -158,11 +157,11 @@ void PlayerClass::PlayerMovement() {
           }
         bl = GetBlock(relx,rely);
         switch(bl){
-          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); UpdateEBlock(relx,rely); sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50); break;
-          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); UpdateEBlock(relx,rely); sound.noTone(); sound.tone(NOTE_D5,50,NOTE_E3,50); break;
-          case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); Keys++; sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50); break;
-          case LOCKED_DOOR: if (Keys > 0) {SetBlock(relx,rely,OPEN_DOOR); Keys--; sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50);} else {sound.noTone(); sound.tone(NOTE_D2,150,NOTE_E2,50);}  break;
-          case LOCKED_STAIRS: if (Keys > 0) {SetBlock(relx,rely,DOWN_STAIRS); Keys--; sound.noTone(); sound.tone(NOTE_D3,50,NOTE_E5,50);} else {sound.noTone(); sound.tone(NOTE_D2,150,NOTE_E2,50);} break;
+          case SWITCH_ON: SetBlock(relx,rely,SWITCH_OFF); UpdateEBlock(relx,rely); sound.tone(NOTE_D3,50,NOTE_E5,50); break;
+          case SWITCH_OFF: SetBlock(relx,rely,SWITCH_ON); UpdateEBlock(relx,rely); sound.tone(NOTE_D5,50,NOTE_E3,50); break;
+          case CLOSED_CHEST: SetBlock(relx,rely,OPEN_CHEST); Keys++; sound.tone(NOTE_D3,50,NOTE_E5,50); break;
+          case LOCKED_DOOR: if (Keys > 0) {SetBlock(relx,rely,OPEN_DOOR); Keys--; sound.tone(NOTE_D3,50,NOTE_E5,50);} else {sound.tone(NOTE_D2,150,NOTE_E2,50);}  break;
+          case LOCKED_STAIRS: if (Keys > 0) {SetBlock(relx,rely,DOWN_STAIRS); Keys--; sound.tone(NOTE_D3,50,NOTE_E5,50);} else {sound.tone(NOTE_D2,150,NOTE_E2,50);} break;
         }
     }
   

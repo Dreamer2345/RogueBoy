@@ -112,7 +112,6 @@ Point setRandomItem(uint8_t blk){
 }
 
 void Init(uint16_t x,uint16_t y){
-  sound.noTone();
   sound.tone(NOTE_C7H,150, NOTE_REST,100, NOTE_C6,150);
   playerobj.x = x;
   playerobj.y = y;
@@ -179,7 +178,6 @@ void GenCave(){
 void BarrelBreak(uint8_t x,uint8_t y){
   SetBlock(x,y,18);
   DropItem(x,y,false);
-  sound.noTone();
   sound.tone(NOTE_C3,50, NOTE_C2,50, NOTE_E3,150);
 }
 
@@ -237,7 +235,6 @@ void UpdateMainMenu(){
   if (ard.justPressed(B_BUTTON)){
     Audio = !Audio;
     ard.audio.on();
-    sound.noTone();
     sound.tone(NOTE_C4,50);
     ard.audio.off();
     if (Audio){ard.audio.on();}else{ard.audio.off();}
@@ -261,7 +258,6 @@ void TitleText(){
             ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
             if ((pgm_read_byte(&TitleSequenceText[i]) != 32)&&(pgm_read_byte(&TitleSequenceText[i]) != 13))
               {
-              sound.noTone();
               sound.tone(NOTE_C5,150);
               }
             i++;
@@ -281,7 +277,7 @@ void TitleText(){
       }
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
       showarrow++;
-      if (showarrow >= 64){sound.noTone(); sound.tone(NOTE_D2H,150);Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
+      if (showarrow >= 64){sound.tone(NOTE_D2H,150);Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
   }
 }
 
@@ -591,6 +587,6 @@ void UpdateGame(){
   DrawHud();
   if (ard.everyXFrames(15)) {Timer--;}
   if (Timer == 0){playerobj.H = 0;}
-  if (playerobj.H <= 0) {sound.noTone(); sound.tones(DeathNotes); gameState = GameState::Dead;}
+  if (playerobj.H <= 0) {sound.tones(DeathNotes); gameState = GameState::Dead;}
 }
 
