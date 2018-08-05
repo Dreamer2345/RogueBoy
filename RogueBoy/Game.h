@@ -376,15 +376,15 @@ Serial.println(" ");
         px = ((pgm_read_byte(&CLevel[index]) >> 4)*16)+8;
         py = ((pgm_read_byte(&CLevel[index++]) & 0x0f)*16)+8;
         H = pgm_read_byte(&CLevel[index++]);
-        Objects[i].setSprite(px,py,H,ID,pgm_read_byte(&offsets[ID]),true);
+        Objects[i].setSprite(px, py, H, ID, pgm_read_byte(&offsets[ID]),true);
     }
     ENum = pgm_read_byte(&CLevel[index++]);
     for (int i=0; i<ENum; i++){
-        ID = pgm_read_byte(&CLevel[index++]);
-        Offs = pgm_read_byte(&CLevel[index++]);
-        py = pgm_read_byte(&CLevel[index++]);
-        H = pgm_read_byte(&CLevel[index++]);
-        Envi[i].SetEnv(ID,Offs,py,H,true);
+        uint8_t x1 = ((pgm_read_byte(&CLevel[index]) >> 4)*16)+8;
+        uint8_t y1 = ((pgm_read_byte(&CLevel[index++]) & 0x0f)*16)+8;
+        uint8_t x2 = ((pgm_read_byte(&CLevel[index]) >> 4)*16)+8;
+        uint8_t y2 = ((pgm_read_byte(&CLevel[index++]) & 0x0f)*16)+8;
+        Envi[i].SetEnv(x1, y1, x2, y2, true);
     }
 }
 
