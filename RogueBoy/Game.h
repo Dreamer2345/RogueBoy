@@ -284,16 +284,81 @@ void TitleText(){
 const uint8_t PROGMEM offsets[] = { 0, 12, 8, 9, 10, 11, 3, 4, 5, 6 };
 
 void LoadMAP(byte L){
+
     const uint8_t * CLevel = Maps[L];
-    MAP_WIDTH = pgm_read_byte(&CLevel[0]);
-    MAP_HEIGHT = pgm_read_byte(&CLevel[1]);
+
+    MAP_WIDTH = pgm_read_byte(&CLevel[0]) >> 4;
+    MAP_HEIGHT = pgm_read_byte(&CLevel[0]) & 0x0F;
     uint8_t UsedMap = MAP_WIDTH*MAP_HEIGHT; 
-    uint16_t px = (pgm_read_byte(&CLevel[2])*16)+8;
-    uint16_t py = (pgm_read_byte(&CLevel[3])*16)+8;
-    uint8_t index = OFFSET+UsedMap;
+    uint16_t px = ((pgm_read_byte(&CLevel[1]) >> 4)*16)+8;
+    uint16_t py = ((pgm_read_byte(&CLevel[1]) & 0x0F)*16)+8;
+    //uint8_t index = OFFSET+UsedMap;
+    uint8_t index = OFFSET;
     Init(px,py);
+
+    /* SJH
     memcpy_P(&Map[0], &CLevel[OFFSET], UsedMap);
+    */
+
+
+
+    // Read map data ..
+    {
+
+      // const uint8_t *levelMap = levelMaps[_number];
+      // uint8_t fuelIdx = 0;
+      // uint8_t gateIdx = 0;
+      uint8_t cursor = 0;
+
+      while (true) {
+
+        uint8_t data = pgm_read_byte(&CLevel[index]);
+Serial.print(data);
+Serial.print(" ");
+        uint8_t tile = data >> 3;
+        uint8_t run = data & 0x07;
+Serial.print(tile);
+Serial.print(" ");
+Serial.print(run);
+Serial.print(" : ");
+Serial.print(index);
+Serial.print(" : ");
+Serial.print(cursor);
+Serial.println(" ");
+
+        index++;
+
+        if (run > 0) {
+
+          for (uint8_t x = 0; x < run; x++) {
+
+            Map[cursor] = tile;
+            cursor++;
+
+          }
+
+        }
+        else {
+        
+          break;
+        
+        }
+
+      }
+
+    }
+
+Serial.print("index: ");
+Serial.print(index);
+Serial.println(" ");
+
+
+
+
     ONum = pgm_read_byte(&CLevel[index]);
+Serial.print("ONum: ");
+Serial.print(ONum);
+Serial.println(" ");
     byte ID = 0;
     byte H = 0;
     byte Offs = 0;
@@ -308,21 +373,9 @@ void LoadMAP(byte L){
     
     for (int i=0; i<ONum; i++){
         ID = pgm_read_byte(&CLevel[index++]);
-        px = (pgm_read_byte(&CLevel[index++])*16)+8;
-        py = (pgm_read_byte(&CLevel[index++])*16)+8;
+        px = ((pgm_read_byte(&CLevel[index]) >> 4)*16)+8;
+        py = ((pgm_read_byte(&CLevel[index++]) & 0x0f)*16)+8;
         H = pgm_read_byte(&CLevel[index++]);
-        // switch (ID){
-        //   case 1: Offs=12; break; //Coin
-        //   case 2: Offs=8; break; //Potion
-        //   case 3: Offs=9; break; //Jelly Filled Doughnut
-        //   case 4: Offs=10; break; //Key
-        //   case 5: Offs=11; break; //Ham
-        //   case 6: Offs=3; break; //Floater
-        //   case 7: Offs=4; break; //Skull
-        //   case 8: Offs=5; break; //Spider
-        //   case 9: Offs=6; break; //Bat
-        // }
-        // Objects[i].setSprite(px,py,H,ID,Offs,true);
         Objects[i].setSprite(px,py,H,ID,pgm_read_byte(&offsets[ID]),true);
     }
     ENum = pgm_read_byte(&CLevel[index++]);
@@ -336,6 +389,10 @@ void LoadMAP(byte L){
 }
 
 void NextLevelLoad(){
+
+
+Serial.print("NextLevelLoad "); 
+Serial.println(GameType); 
   if (GameType) {
     if (Level < MAXLEVEL){
       LoadMAP(Level);
