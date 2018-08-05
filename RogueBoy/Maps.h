@@ -948,7 +948,7 @@ const uint8_t PROGMEM MAP_1[] = {
 
 
 byte Level;
-const uint8_t * Maps[] = {MAP_8, MAP_2, MAP_3, MAP_4, MAP_5, MAP_6, MAP_7, MAP_8 , MAP_9,MAP_10,MAP_11,MAP_12,MAP_13,MAP_14,MAP_15,MAP_16,MAP_17,MAP_18};
+const uint8_t * Maps[] = {MAP_1, MAP_2, MAP_3, MAP_4, MAP_5, MAP_6, MAP_7, MAP_8 , MAP_9,MAP_10,MAP_11,MAP_12,MAP_13,MAP_14,MAP_15,MAP_16,MAP_17,MAP_18};
 uint8_t Map[MAP_SIZE];
 
 template<typename T>

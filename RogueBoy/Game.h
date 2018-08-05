@@ -111,7 +111,7 @@ Point setRandomItem(uint8_t blk){
   }while(Done == false);
 }
 
-void Init(uint16_t x,uint16_t y){
+void Init(uint16_t x, uint16_t y){
   sound.tone(NOTE_C7H,150, NOTE_REST,100, NOTE_C6,150);
   playerobj.x = x;
   playerobj.y = y;
@@ -121,10 +121,10 @@ void Init(uint16_t x,uint16_t y){
   playerobj.Kill = 0;
   playerobj.H = 100;
   for (uint8_t i = 0; i < 6; i++){
-  Bullet[i].Kill();
+    Bullet[i].Kill();
   }
   for (uint8_t i = 0; i < MAXOBJECT; i++){
-  Objects[i].SetActive(false);
+    Objects[i].SetActive(false);
   }
   Timer = 255;
 }
@@ -294,20 +294,12 @@ void LoadMAP(byte L){
     uint16_t py = ((pgm_read_byte(&CLevel[1]) & 0x0F)*16)+8;
     //uint8_t index = OFFSET+UsedMap;
     uint8_t index = OFFSET;
-    Init(px,py);
-
-    /* SJH
-    memcpy_P(&Map[0], &CLevel[OFFSET], UsedMap);
-    */
-
+    Init(px, py);
 
 
     // Read map data ..
     {
 
-      // const uint8_t *levelMap = levelMaps[_number];
-      // uint8_t fuelIdx = 0;
-      // uint8_t gateIdx = 0;
       uint8_t cursor = 0;
 
       while (true) {
@@ -315,6 +307,7 @@ void LoadMAP(byte L){
         uint8_t data = pgm_read_byte(&CLevel[index]);
         uint8_t tile = data >> 3;
         uint8_t run = data & 0x07;
+
         index++;
 
         if (run > 0) {
@@ -337,37 +330,46 @@ void LoadMAP(byte L){
 
     }
 
-
-    ONum = pgm_read_byte(&CLevel[index]);
-    byte ID = 0;
-    byte H = 0;
-    byte Offs = 0;
-    bool A = false;
     index++;
-    for (int i=0; i<MAXOBJECT; i++){
-      Objects[i].setSprite(0,0,0,0,0,false);
-    }
-    for (int i=0; i<MAXENVIROMENT; i++){
-      Envi[i].SetEnv(0,0,0,0,false);
-    }
     
-    for (int i=0; i<ONum; i++){
-        ID = pgm_read_byte(&CLevel[index++]);
-        // px = (pgm_read_byte(&CLevel[index++])*16)+8;
-        // py = (pgm_read_byte(&CLevel[index++])*16)+8;        
-        px = ((pgm_read_byte(&CLevel[index]) >> 4) * 16) + 8;
-        py = ((pgm_read_byte(&CLevel[index++]) & 0x0f) * 16) + 8;
-        H = pgm_read_byte(&CLevel[index++]);
+    ONum = pgm_read_byte(&CLevel[index]);
+    for (int i=0; i<MAXOBJECT; i++){
+
+        uint8_t ID = 0;
+        uint8_t H = 0;
+        uint8_t Offs = 0;
+        uint16_t px = 0;
+        uint16_t py = 0;
+
+        if (i < ONum) {
+          ID = pgm_read_byte(&CLevel[index++]);
+          px = ((pgm_read_byte(&CLevel[index]) >> 4) * 16) + 8;
+          py = ((pgm_read_byte(&CLevel[index++]) & 0x0f) * 16) + 8;
+          H = pgm_read_byte(&CLevel[index++]);
+        }
+
         Objects[i].setSprite(px, py, H, ID, pgm_read_byte(&offsets[ID]),true);
+
     }
+
     ENum = pgm_read_byte(&CLevel[index++]);
-    for (int i=0; i<ENum; i++){
-        uint8_t x1 = pgm_read_byte(&CLevel[index]) >> 4;
-        uint8_t y1 = pgm_read_byte(&CLevel[index++]) & 0x0f;
-        uint8_t x2 = pgm_read_byte(&CLevel[index]) >> 4;
-        uint8_t y2 = pgm_read_byte(&CLevel[index++]) & 0x0f;
+    for (int i=0; i<MAXENVIROMENT; i++){
+        uint8_t x1 = 0;
+        uint8_t y1 = 0;
+        uint8_t x2 = 0;
+        uint8_t y2 = 0;
+
+        if (i < ENum) {
+          x1 = pgm_read_byte(&CLevel[index]) >> 4;
+          y1 = pgm_read_byte(&CLevel[index++]) & 0x0f;
+          x2 = pgm_read_byte(&CLevel[index]) >> 4;
+          y2 = pgm_read_byte(&CLevel[index++]) & 0x0f;
+        }
+
         Envi[i].SetEnv(x1, y1, x2, y2, true);
+
     }
+
 }
 
 void NextLevelLoad(){
@@ -482,7 +484,7 @@ void UpdateObjects(){
 
                   }
 
-                  note = NOTE_C3H; duration = 150;
+                  sound.noTone();
                   sound.tone(NOTE_D3,50); 
                   ard.setRGBled(255,0,0); 
                   delay(5);
@@ -495,13 +497,16 @@ void UpdateObjects(){
               // Play a note?
 
               if (note != 0) {
+                sound.noTone();
                 sound.tone(note, duration); 
               }
 
             }
 
          }
+
       }
+      
   }
   for (uint8_t j=0;j<6;j++){
     if (Bullet[j].GetActive()){
@@ -529,9 +534,9 @@ void DisplayObjects() {
     }
   }
   for (uint8_t i=0;i<6;i++){
-    if (Bullet[i].GetActive()){
+    //if (Bullet[i].GetActive()){
       Bullet[i].Display();
-    }
+    //}
   }
 }
 
