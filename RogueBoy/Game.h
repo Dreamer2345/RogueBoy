@@ -112,7 +112,6 @@ Point setRandomItem(uint8_t blk){
 }
 
 void Init(uint16_t x,uint16_t y){
-  sound.noTone();
   sound.tone(NOTE_C7H,150, NOTE_REST,100, NOTE_C6,150);
   playerobj.x = x;
   playerobj.y = y;
@@ -179,7 +178,6 @@ void GenCave(){
 void BarrelBreak(uint8_t x,uint8_t y){
   SetBlock(x,y,18);
   DropItem(x,y,false);
-  sound.noTone();
   sound.tone(NOTE_C3,50, NOTE_C2,50, NOTE_E3,150);
 }
 
@@ -237,7 +235,6 @@ void UpdateMainMenu(){
   if (ard.justPressed(B_BUTTON)){
     Audio = !Audio;
     ard.audio.on();
-    sound.noTone();
     sound.tone(NOTE_C4,50);
     ard.audio.off();
     if (Audio){ard.audio.on();}else{ard.audio.off();}
@@ -261,7 +258,6 @@ void TitleText(){
             ard.print((char)pgm_read_byte(&TitleSequenceText[i]));
             if ((pgm_read_byte(&TitleSequenceText[i]) != 32)&&(pgm_read_byte(&TitleSequenceText[i]) != 13))
               {
-              sound.noTone();
               sound.tone(NOTE_C5,150);
               }
             i++;
@@ -281,10 +277,11 @@ void TitleText(){
       }
       sprites.drawOverwrite(0,64-showarrow,Logo,0);
       showarrow++;
-      if (showarrow >= 64){sound.noTone(); sound.tone(NOTE_D2H,150);Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
+      if (showarrow >= 64){sound.tone(NOTE_D2H,150);Audio = true; showarrow = 0; gameState = GameState::MainMenu;}
   }
 }
 
+const uint8_t PROGMEM offsets[] = { 0, 12, 8, 9, 10, 11, 3, 4, 5, 6 };
 
 void LoadMAP(byte L){
     const uint8_t * CLevel = Maps[L];
@@ -314,18 +311,19 @@ void LoadMAP(byte L){
         px = (pgm_read_byte(&CLevel[index++])*16)+8;
         py = (pgm_read_byte(&CLevel[index++])*16)+8;
         H = pgm_read_byte(&CLevel[index++]);
-        switch (ID){
-          case 1: Offs=12; break; //Coin
-          case 2: Offs=8; break; //Potion
-          case 3: Offs=9; break; //Jelly Filled Doughnut
-          case 4: Offs=10; break; //Key
-          case 5: Offs=11; break; //Ham
-          case 6: Offs=3; break; //Floater
-          case 7: Offs=4; break; //Skull
-          case 8: Offs=5; break; //Spider
-          case 9: Offs=6; break; //Bat
-        }
-        Objects[i].setSprite(px,py,H,ID,Offs,true);
+        // switch (ID){
+        //   case 1: Offs=12; break; //Coin
+        //   case 2: Offs=8; break; //Potion
+        //   case 3: Offs=9; break; //Jelly Filled Doughnut
+        //   case 4: Offs=10; break; //Key
+        //   case 5: Offs=11; break; //Ham
+        //   case 6: Offs=3; break; //Floater
+        //   case 7: Offs=4; break; //Skull
+        //   case 8: Offs=5; break; //Spider
+        //   case 9: Offs=6; break; //Bat
+        // }
+        // Objects[i].setSprite(px,py,H,ID,Offs,true);
+        Objects[i].setSprite(px,py,H,ID,pgm_read_byte(&offsets[ID]),true);
     }
     ENum = pgm_read_byte(&CLevel[index++]);
     for (int i=0; i<ENum; i++){
@@ -365,28 +363,117 @@ void UpdateObjects(){
       if (Ud) {Objects[i].SpriteAI();}
       
       if (Collision(Objects[i].GetX(),Objects[i].GetY(),playerobj.x,playerobj.y)){
+
+          /*
           switch(Objects[i].GetType()){
             case 1: playerobj.Coins++; Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C7H,150); break;
             case 2: playerobj.Coins+=5; Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C7H,150); break;
             case 3: playerobj.H += 5; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); sound.noTone();  sound.tone(NOTE_C3H,150); break;
             case 5: playerobj.H += 10; if (playerobj.H > 100) {playerobj.H = 100;} Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C3H,150); break;
             case 4: playerobj.Keys++; Objects[i].SetActive(false); sound.noTone(); sound.tone(NOTE_C7H,150); break;
-
             case 6: if (ard.everyXFrames(5)) {playerobj.H -= 10*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);}  break;
             case 7: if (ard.everyXFrames(5)) {playerobj.H -= 5*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
             case 8: if (ard.everyXFrames(5)) {playerobj.H -= 2*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
-            case 9: if (ard.everyXFrames(5)) {playerobj.H -= 1*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
+             case 9: if (ard.everyXFrames(5)) {playerobj.H -= 1*Diff; sound.noTone(); sound.tone(NOTE_D3,50); ard.setRGBled(255,0,0); delay(5); ard.setRGBled(0,0,0);} break;
+          }
+          */
+
+          {
+            uint16_t note = 0;
+            uint16_t duration = 0;
+            uint8_t type = Objects[i].GetType();
+
+            switch (type) {
+              
+              case 1: 
+                playerobj.Coins++; 
+                Objects[i].SetActive(false); 
+                note = NOTE_C7H; duration = 150;
+//                sound.tone(NOTE_C7H, 150); 
+                break;
+
+              case 2: 
+                playerobj.Coins+=5; 
+                Objects[i].SetActive(false); 
+                note = NOTE_C7H; duration = 150;
+//                sound.tone(NOTE_C7H,150); 
+                break;
+
+              case 3: 
+                playerobj.H += 5; 
+                if (playerobj.H > 100) {playerobj.H = 100;} 
+                Objects[i].SetActive(false); 
+                note = NOTE_C3H; duration = 150;
+//                sound.tone(NOTE_C3H,150); 
+                break;
+
+              case 4: 
+                playerobj.Keys++; 
+                Objects[i].SetActive(false); 
+                note = NOTE_C7H; duration = 150;
+//                sound.tone(NOTE_C7H,150); 
+                break;
+
+              case 5: 
+                playerobj.H += 10; 
+                if (playerobj.H > 100) {playerobj.H = 100;} 
+                Objects[i].SetActive(false); 
+                note = NOTE_C3H; duration = 150;
+//                sound.tone(NOTE_C3H,150); 
+                break;
+
+              case 6 ... 9:
+
+                if (ard.everyXFrames(5)) { 
+
+                  switch (type) {
+
+                    case 6:   
+                      playerobj.H -= 10*Diff; 
+                      break;
+
+                    case 7: 
+                      playerobj.H -= 5*Diff; 
+                      break;
+              
+                    case 8: 
+                      playerobj.H -= 2*Diff; 
+                      break;
+
+                    case 9: 
+                      playerobj.H -= 1*Diff; 
+                      break;
+
+                  }
+
+                  note = NOTE_C3H; duration = 150;
+                  sound.tone(NOTE_D3,50); 
+                  ard.setRGBled(255,0,0); 
+                  delay(5);
+                  ard.setRGBled(0,0,0);
+
+                }
+                break;
+              }
+
+              // Play a note?
+
+              if (note != 0) {
+                sound.tone(note, duration); 
+              }
+
             }
+
          }
       }
   }
-  for (byte j=0;j<6;j++){
+  for (uint8_t j=0;j<6;j++){
     if (Bullet[j].GetActive()){
       Bullet[j].Update();
     }
   }
-    for (byte i=0;i<ONum;i++){
-      for (byte j=0;j<6;j++){
+    for (uint8_t i=0;i<ONum;i++){
+      for (uint8_t j=0;j<6;j++){
         if ((Bullet[j].GetActive()) && (Objects[i].IsActive()) && (Objects[i].GetType() >= 6) && (Collision(Objects[i].GetX()-4,Objects[i].GetY()-4,Bullet[j].GetX()-4,Bullet[j].GetY()-4))){
           Objects[i].Damage();
           Bullet[j].Kill();
@@ -400,12 +487,12 @@ void UpdateObjects(){
 }
 
 void DisplayObjects() {
-  for (byte i=0;i<ONum;i++){
+  for (uint8_t i=0;i<ONum;i++){
     if (Objects[i].IsActive()) {
     Objects[i].Display();
     }
   }
-  for (byte i=0;i<6;i++){
+  for (uint8_t i=0;i<6;i++){
     if (Bullet[i].GetActive()){
       Bullet[i].Display();
     }
@@ -500,6 +587,6 @@ void UpdateGame(){
   DrawHud();
   if (ard.everyXFrames(15)) {Timer--;}
   if (Timer == 0){playerobj.H = 0;}
-  if (playerobj.H <= 0) {sound.noTone(); sound.tones(DeathNotes); gameState = GameState::Dead;}
+  if (playerobj.H <= 0) {sound.tones(DeathNotes); gameState = GameState::Dead;}
 }
 
