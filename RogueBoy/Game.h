@@ -313,19 +313,8 @@ void LoadMAP(byte L){
       while (true) {
 
         uint8_t data = pgm_read_byte(&CLevel[index]);
-Serial.print(data);
-Serial.print(" ");
         uint8_t tile = data >> 3;
         uint8_t run = data & 0x07;
-Serial.print(tile);
-Serial.print(" ");
-Serial.print(run);
-Serial.print(" : ");
-Serial.print(index);
-Serial.print(" : ");
-Serial.print(cursor);
-Serial.println(" ");
-
         index++;
 
         if (run > 0) {
@@ -348,17 +337,8 @@ Serial.println(" ");
 
     }
 
-Serial.print("index: ");
-Serial.print(index);
-Serial.println(" ");
-
-
-
 
     ONum = pgm_read_byte(&CLevel[index]);
-Serial.print("ONum: ");
-Serial.print(ONum);
-Serial.println(" ");
     byte ID = 0;
     byte H = 0;
     byte Offs = 0;
@@ -379,43 +359,19 @@ Serial.println(" ");
         py = ((pgm_read_byte(&CLevel[index++]) & 0x0f) * 16) + 8;
         H = pgm_read_byte(&CLevel[index++]);
         Objects[i].setSprite(px, py, H, ID, pgm_read_byte(&offsets[ID]),true);
-        Serial.print(">> px: ");
-Serial.print(px);
-Serial.print(", py: ");
-Serial.print(py);
-Serial.print(", H: ");
-Serial.print(H);
-Serial.print(", ID: ");
-Serial.print(ID);
-Serial.println(" ");   
     }
     ENum = pgm_read_byte(&CLevel[index++]);
-Serial.print("ENum: ");
-Serial.print(ENum);
-Serial.println(" ");    
     for (int i=0; i<ENum; i++){
         uint8_t x1 = pgm_read_byte(&CLevel[index]) >> 4;
         uint8_t y1 = pgm_read_byte(&CLevel[index++]) & 0x0f;
         uint8_t x2 = pgm_read_byte(&CLevel[index]) >> 4;
         uint8_t y2 = pgm_read_byte(&CLevel[index++]) & 0x0f;
-Serial.print("x1: ");
-Serial.print(x1);
-Serial.print(", y1: ");
-Serial.print(y1);
-Serial.print(", x2: ");
-Serial.print(x2);
-Serial.print(", y2: ");
-Serial.print(y2);
-Serial.println(" ");    
         Envi[i].SetEnv(x1, y1, x2, y2, true);
     }
 }
 
 void NextLevelLoad(){
 
-
-Serial.print("NextLevelLoad "); 
-Serial.println(GameType); 
   if (GameType) {
     if (Level < MAXLEVEL){
       LoadMAP(Level);
