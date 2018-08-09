@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:leonardo",
+    "port": "/dev/cu.Bluetooth-Incoming-Port",
+    "sketch": "RogueBoy.ino",
+    "output": "../../build"
+}

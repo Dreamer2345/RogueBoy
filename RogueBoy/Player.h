@@ -70,6 +70,7 @@ void BulletClass::Update(){
 }
 
 void BulletClass::Display(){
+  if (!Active){return;}
   int _x = (playerobj.x-x);
   int _y = (playerobj.y-y);
   sprites.drawExternalMask((CENTERX-4)-_x,(CENTERY-4)-_y,SpriteEnviroment,SpriteMask,(18+d),(18+d));
