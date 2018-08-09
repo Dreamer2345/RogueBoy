@@ -143,8 +143,8 @@ void Flood(bool * Ref,uint8_t x,uint8_t y){
 
 void GenCave(){
   uint8_t Temp[MAP_SIZE];
-  MAP_HEIGHT = 10;
-  MAP_WIDTH = 10;
+  MAP_HEIGHT = 15;
+  MAP_WIDTH = 15;
   for(uint8_t i = 0; i < MAP_SIZE; i++) {Temp[i] = 8; Map[i] = 8;}
   FillRandom();
   for(uint8_t count = 0; count < 6; count++) {
@@ -171,7 +171,7 @@ void GenCave(){
   for(uint8_t count = 0; count < 6; count++) {
     setRandomItem(8);
   }
-  Timer = 50;
+  Timer = 150;
 }
 
 

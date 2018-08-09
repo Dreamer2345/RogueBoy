@@ -1,3 +1,4 @@
+
 #pragma once
 #define MAXLEVEL 18
 #define MAXOBJECT 15
@@ -9,9 +10,9 @@
 #define TILE_HEIGHT 16
 #define TILE_SIZE 16
 
-uint8_t MAP_HEIGHT = 10;
-uint8_t MAP_WIDTH = 10;
-#define MAP_SIZE 100
+uint8_t MAP_HEIGHT = 15;
+uint8_t MAP_WIDTH = 15;
+#define MAP_SIZE 225
 
 
 
@@ -1066,10 +1067,3 @@ void UpdateEBlock(byte x,byte y){
     }
   }
 }
-
-
-
-
-
-
-
