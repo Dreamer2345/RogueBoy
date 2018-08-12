@@ -329,10 +329,8 @@ void LoadMAP(byte L){
       }
 
     }
-
-    index++;
     
-    ONum = pgm_read_byte(&CLevel[index]);
+    ONum = pgm_read_byte(&CLevel[index++]);
     for (int i=0; i<MAXOBJECT; i++){
 
         uint8_t ID = 0;
@@ -340,15 +338,17 @@ void LoadMAP(byte L){
         uint8_t Offs = 0;
         uint16_t px = 0;
         uint16_t py = 0;
+        bool active = false;
 
         if (i < ONum) {
           ID = pgm_read_byte(&CLevel[index++]);
           px = ((pgm_read_byte(&CLevel[index]) >> 4) * 16) + 8;
           py = ((pgm_read_byte(&CLevel[index++]) & 0x0f) * 16) + 8;
           H = pgm_read_byte(&CLevel[index++]);
+          active = true;
         }
 
-        Objects[i].setSprite(px, py, H, ID, pgm_read_byte(&offsets[ID]),true);
+        Objects[i].setSprite(px, py, H, ID, pgm_read_byte(&offsets[ID]),active);
 
     }
 
@@ -358,18 +358,78 @@ void LoadMAP(byte L){
         uint8_t y1 = 0;
         uint8_t x2 = 0;
         uint8_t y2 = 0;
-
+        bool active = false;
         if (i < ENum) {
           x1 = pgm_read_byte(&CLevel[index]) >> 4;
           y1 = pgm_read_byte(&CLevel[index++]) & 0x0f;
           x2 = pgm_read_byte(&CLevel[index]) >> 4;
           y2 = pgm_read_byte(&CLevel[index++]) & 0x0f;
+          active = true;
         }
 
-        Envi[i].SetEnv(x1, y1, x2, y2, true);
+        Envi[i].SetEnv(x1, y1, x2, y2, active);
 
     }
 
+/*
+
+  Serial.println("-----------------------------");
+  Serial.print("Map: ");
+  Serial.print(L);
+  Serial.print(", W: ");
+  Serial.print(MAP_WIDTH);
+  Serial.print(", H: ");
+  Serial.println(MAP_HEIGHT);
+  Serial.println("-----------------------------");
+
+  uint8_t i = 0;
+  for (int x=0; x<MAP_WIDTH; x++){
+    for (int y=0; y<MAP_HEIGHT; y++){
+      Serial.print(Map[i]);
+      Serial.print(" ");
+      i++;
+    }
+    Serial.println(" ");
+  }
+
+  Serial.print("Obj: ");
+  Serial.print(ONum);
+  Serial.print(", Env: ");
+  Serial.println(ENum);
+
+  for (int i=0; i<MAXOBJECT; i++){
+
+    if (Objects[i].IsActive()) {
+      Serial.print("obj[");
+      Serial.print(i);
+      Serial.print("] px:");
+      Serial.print(Objects[i].GetX());
+      Serial.print(", py:");
+      Serial.print(Objects[i].GetY());
+      Serial.print(", type:");
+      Serial.print(Objects[i].GetType());
+      Serial.print(", active:");
+      Serial.println(Objects[i].IsActive());
+    }
+
+  }
+
+  Serial.println(" ");
+  for (int i=0; i<MAXENVIROMENT; i++){
+
+    if (Envi[i].IsActive()) {
+      Serial.print("env[");
+      Serial.print(i);
+      Serial.print("] x:");
+      Serial.print(Envi[i].FinishX());
+      Serial.print(", p:");
+      Serial.print(Envi[i].FinishY());
+      Serial.print(", active:");
+      Serial.println(Envi[i].IsActive());
+    }
+
+  }
+*/
 }
 
 void NextLevelLoad(){
